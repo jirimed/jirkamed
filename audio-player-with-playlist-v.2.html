@@ -1,0 +1,2244 @@
+ <!DOCTYPE html>
+<html lang="cs">
+    <link rel="icon" href="https://img41.rajce.idnes.cz/d4102/19/19244/19244630_db82ad174937335b1a151341387b7af2/images/image_82x82.jpg?ver=1" type="image/png">
+<head>
+    <meta charset="UTF-8">
+    <title>Star Trek: HUDEBNI PREHRAVAC</title>
+    <style>
+      /* Modernější proměnné a základní nastavení */
+:root {
+    --primary-color: #2196F3;
+    --secondary-color: #00ff80;
+    --accent-color: #ff2d55;
+    --background-dark: #0a0a0a;
+    --background-light: #1a1a1a;
+    --text-primary: #ffffff;
+    --text-secondary: #b3b3b3;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+    background-color: var(--background-dark);
+    color: var(--text-primary);
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    margin: 0;
+    padding: var(--spacing-unit);
+    text-align: center;
+    font-weight: bold;
+}
+
+
+
+/* Vylepšený nadpis toto mam jako hlavní css ten sem si jen na chvíli deaktivoval z duvodu že testuji druhy css pro H1 */
+/*h1 {
+    font-size: 3rem; /* Původní velikost písma */
+   /* font-weight: 800; /* Původní tloušťka písma */
+  /*  text-decoration: none; /* Žádné podtržení */
+  /*  background-image: linear-gradient(115deg, #4fcf70, #fad648, #a767e5, #12bcfe, #44ce7b); /* Barevný gradient */
+  /*  -webkit-background-clip: text; /* Clip background for text */
+  /*  background-clip: text; /* Clip background for text */
+  /*  color: transparent; /* Průhledná barva pro gradient */
+  /*  text-align: center; /* Zarovnání textu na střed */
+ /*   margin-bottom: var(--spacing-lg); /* Původní spodní okraj */
+  /*  letter-spacing: -0.5px; /* Původní mezera mezi písmeny */
+  /*  user-select: none; /* Zabrání označení textu */
+  /*  animation: animate 1.5s linear infinite; /* Přidání animace */
+  /*  font-family: Copperplate, 'Copperplate Gothic Light', fantasy;
+}
+
+/* Klíčové snímky pro animaci */
+/*@keyframes animate {
+  /*  0% {*/
+    /*    filter: hue-rotate(0deg); /* Počáteční stav animace */
+   /* }*/
+  /*  100% {*/
+      /*  filter: hue-rotate(360deg); /* Konečný stav animace */
+   /* }*/
+/*}*/
+h1{
+      font-size: 2.5em;
+      font-weight: bold;
+      background: linear-gradient(45deg, #4caf50, #f44336, #2196f3, #ff9800);
+      background-size: 400% 400%;
+      -webkit-background-clip: text;
+      color: transparent;
+      animation: gradientAnimation 25s ease infinite;
+      margin-bottom: 40px;
+     user-select: none; /* Zabrání označení textu */
+    }
+
+    /* Animace pro plynulé přechody */
+    @keyframes gradientAnimation {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+        
+        
+        
+        
+/* Modernější kontejner přehrávače */
+.audio-container {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    max-width: 1500px;
+    width: 100%;  /* Přidáno pro lepší responsivitu */
+    margin: 0 auto;
+    padding: var(--spacing-lg);
+    transition: var(--transition);
+    font-size: 30px;
+    user-select: none; /* Zabrání označení textu */
+    /* Centrování obsahu */
+    display: flex;
+    flex-direction: column;  /* Přidáno pro vertikální layout */
+    align-items: center;     /* Horizontální centrování */
+    justify-content: center; /* Vertikální centrování */
+}
+
+.audio-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    font-size: 30px;
+}
+
+/* Pro lepší responsivitu */
+@media screen and (max-width: 768px) {
+    .audio-container {
+        width: 95%;
+        padding: var(--spacing-md);
+        margin: var(--spacing-md) auto;
+    }
+}
+
+/* Playlist kontejner */
+.playlist {
+    counter-reset: playlist-counter;
+    background: var(--background-light);
+    border-radius: 12px;
+    padding: var(--spacing-unit);
+    max-height: 512px; /*výška kontejneru je 512px*/
+    overflow-y: auto;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin: var(--spacing-unit) 0;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) var(--background-dark);
+    position: relative;
+   user-select: none; /* Zabrání označení textu */
+}
+
+/* Scrollbar styly */
+.playlist::-webkit-scrollbar {
+    width: 6px;
+}
+
+.playlist::-webkit-scrollbar-track {
+    background: var(--background-dark);
+}
+
+.playlist::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 3px;
+}
+
+/* Položka playlistu */
+.playlist-item {
+    padding: calc(var(--spacing-unit) * 0.75);
+    margin: calc(var(--spacing-unit) * 0.5) 0;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    cursor: pointer;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+}
+
+.playlist-item {
+    position: relative;
+    padding: 10px 0;
+    margin: 5px 0;
+    padding-left: 40px; /* Levý padding pro číslování */
+    padding-right: 40px; /* Pravý padding pro číslování */
+}
+
+/* Levé číslování */
+.playlist-item::before {
+    content: counter(playlist-counter);
+    counter-increment: playlist-counter;
+    position: absolute;
+    left: 12px;
+    color: goldenrod;
+    font-size: 0.9em;
+    opacity: 0.7;
+    width: 24px;
+    text-align: center;
+}
+
+/* Pravé číslování */
+.playlist-item::after {
+    content: counter(playlist-counter);
+    position: absolute;
+    right: 12px;
+    color: goldenrod;
+    font-size: 0.9em;
+    opacity: 0.7;
+    width: 24px;
+    text-align: center;
+
+}
+
+/* Text uvnitř položky playlistu */
+.playlist-item span {
+    flex: 1;
+    text-align: center;
+    padding-left: 24px; /* Prostor pro číslo */
+}
+
+/* Hover efekt */
+.playlist-item:hover {
+    background: rgba(33, 150, 243, 0.15);
+    
+}
+
+/* Aktivní přehrávání */
+.now-playing {
+    background: linear-gradient(45deg, rgba(33, 150, 243, 0.2), rgba(0, 255, 128, 0.2));
+    border-left: 4px solid var(--primary-color);
+    
+    /* Přidání zvýraznění na levé straně */
+    position: relative;
+    padding-left: 40px; /* Odsazení pro levé číslování */
+}
+/* Now playing indikátor pro číslo  2*/
+.now-playing::before {
+    content: counter(playlist-counter);
+    counter-increment: playlist-counter;
+    position: absolute;
+    left: 12px;
+    color: goldenrod;
+    font-size: 0.9em;
+    opacity: 1; /* Zvýšení opacity pro aktivní položku */
+    font-weight: 600; /* Ztučnění číslování */
+}
+
+/* Now playing indikátor pro číslo */
+.now-playing::after {
+    content: counter(playlist-counter);
+    position: absolute;
+    right: 12px;
+    color: goldenrod;
+    font-size: 0.9em;
+    opacity: 1; /* Zvýšení opacity pro aktivní položku */
+    font-weight: 600; /* Ztučnění číslování */
+}
+
+/* Pokud máte další elementy v playlist-item, můžete je specificky stylovat */
+.playlist-item .song-title {
+    text-align: center;
+    width: 100%;
+    color: aquamarine
+
+}
+
+.playlist-item .duration {
+    position: absolute;
+    right: 20px;
+    color: aquamarine
+}
+
+/* Případné další metadata */
+.playlist-item .metadata {
+    text-align: center;
+    width: 80%;
+    font-size: 0.9em;
+    color: var(--text-secondary);
+}
+
+/* Responsivní úpravy pro číslování */
+@media screen and (max-width: 480px) {
+    .playlist-item::before {
+        left: 8px;
+        font-size: 0.8em;
+    }
+    
+    .playlist-item span {
+        padding-left: 16px;
+    }
+}
+/* Styl pro tlačítko oblíbené skladby */
+.favorite-button {
+    background: none;
+    border: none;
+    font-size: 1.1rem; /* Zvětšení velikosti tlačítka */
+    cursor: pointer;
+    color: #f39c12; /* Zlatá barva pro hvězdičky */
+    user-select: none; /* Zabrání označení textu */
+    
+}
+
+/* Vylepšené ovládací prvky */
+.controls {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    margin: var(--spacing-lg) 0;
+    flex-wrap: wrap;
+}
+
+/* Styl pro tlačítka */
+button  {
+    background: rgba(255, 255, 255, 0.1);*/
+    border: none;
+    border-radius: 50px;
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 1.4rem; /* Větší písmo pro snadnější ovládání */
+    font-weight: 600;
+    padding: 12px 20px;
+    transition: background 0.3s, box-shadow 0.3s, transform 0.2s; /* Zlepšení přechodových efektů */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Středování obsahu */
+    backdrop-filter: blur(5px);
+    user-select: none; /* Zabrání označení textu */
+    
+}
+
+
+/* Zvýraznění tlačítek, když hraje hudba */
+button.playing {
+    background: rgba(33, 150, 243, 0.7); /* Světle modrá pro zvýraznění */
+    color: #fff; /* Bílé písmo pro kontrast */
+    box-shadow: 0 0 20px rgba(33, 150, 243, 0.5); /* Měkký modrý stín */
+}
+
+/* Efekt při najetí myši */
+button:hover {
+    background: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
+}
+
+/* Efekt pro stisknutí tlačítek */
+button:active {
+    transform: scale(0.95); /* Mírné zmenšení pro stisknutí */
+}
+
+/* Styl pro ovládání hlasitosti */
+     .volume-controls {
+         display: flex;
+         align-items: center; /* Vertikální zarovnání */
+         justify-content: center; /* Horizontální zarovnání */
+         gap: var(--spacing-md); /* Prostor mezi prvky */
+         margin-top: var(--spacing-lg); /* Mezera nad ovládáním hlasitosti */
+         color: transparent; /* Skrytí základní barvy textu */
+     }
+     
+     #volume-slider {
+         -webkit-appearance: none; /* Zrušení výchozího vzhledu */
+         width: 580px; /* Šířka posuvníku */
+         height: 12px; /* Výška posuvníku */
+         /*background: rgba(255, 255, 255, 0.3); /* Pozadí posuvníku */
+         border-radius: 5px; /* Zaoblení rohů */
+         outline: none; /* Odstranění okraje při aktivaci */
+          background: linear-gradient(45deg, #4caf50, #f44336, #2196f3, #ff9800);
+    background-size: 400% 400%; /* Zvětšení oblasti pro gradient */
+    animation: gradientAnimation 25s ease infinite; /* Aktivovaná animace pro plynulý přechod */
+         color: transparent; /* Skrytí základní barvy textu */
+     }
+     
+     /* Styl pro úchyt posuvníku */
+     #volume-slider::-webkit-slider-thumb {
+         -webkit-appearance: none; /* Zrušení výchozího vzhledu toto neměnit?? */
+         appearance: none; /* Zrušení výchozího vzhledu toto neměnit??? */
+         width: 15px; /* Šířka úchytu */
+         height: 15px; /* Výška úchytu */
+         border-radius: 50%; /* Zaoblení úchytu */
+         cursor: pointer; /* Změna kurzoru při najetí */
+    background: linear-gradient(45deg, #4caf50, #f44336, #2196f3, #ff9800);
+    background-size: 400% 400%; /* Zvětšení oblasti pro gradient */
+    animation: gradientAnimation 25s ease infinite; /* Aktivovaná animace pro plynulý přechod */
+        color: transparent; /* Skrytí základní barvy textu */ 
+     }
+     
+     /* Styl pro úchyt posuvníku při najetí myši */
+     #volume-slider::-webkit-slider-thumb:hover {
+        background: linear-gradient(45deg, #4caf50, #f44336, #2196f3, #ff9800);
+    background-size: 400% 400%; /* Zvětšení oblasti pro gradient */
+    animation: gradientAnimation 25s ease infinite; /* Aktivovaná animace pro plynulý přechod */
+         color: transparent; /* Skrytí základní barvy textu */
+     }
+/* Animace pro plynulé přechody barev pozadí */
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Animace pro plynulý efekt úchytu */
+@keyframes thumbAnimation {
+    0% {
+        background-color: #ff9800;
+    }
+    50% {
+        background-color: #4caf50;
+    }
+    100% {
+        background-color: #2196f3;
+    }
+}
+
+
+/* Styl pro progres bar */
+#progress-bar {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 30%;
+    height: 20px;
+    background: linear-gradient(45deg, #4caf50, #f44336, #2196f3, #ff9800); /* Gradient pozadí */
+    background-size: 400% 400%; /* Roztažení gradientu */
+    border-radius: 50px;
+    outline: none;
+    margin: 0 10px;
+    animation: gradientAnimation 25s ease infinite; /* Animace pro plynulý pohyb gradientu */
+    transition: background 25s ease-in-out; /* Plynulá změna pozadí */
+    color: transparent; /* Skrytí základní barvy textu */
+}
+
+/* Styl pro úchyt progres baru */
+#progress-bar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #4caf50, #f44336, #2196f3, #ff9800); /* Gradient pozadí */
+    transition: transform 25s ease, background 25s ease; /* Plynulé změny pro úchyt */
+    cursor: pointer;
+    animation: thumbAnimation 25s ease infinite; /* Animace pro úchyt */
+    color: transparent; /* Skrytí základní barvy textu */
+}
+
+/* Styl pro thumb pro Firefox */
+#progress-bar::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #4caf50, #f44336, #2196f3, #ff9800); /* Gradient pozadí */
+    cursor: pointer;
+    transition: transform 25s ease, background 25s ease; /* Plynulé změny pro úchyt */
+    animation: thumbAnimation 25s ease infinite; /* Animace pro úchyt */
+    color: transparent; /* Skrytí základní barvy textu */
+}
+
+/* Animace pro plynulý pohyb pozadí pro progres bar */
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Animace pro úchyt progres baru */
+@keyframes thumbAnimation {
+    0% {
+        background-color: #ff9800; /* Začátek animace */
+    }
+    50% {
+        background-color: #4caf50; /* Střed animace */
+    }
+    100% {
+        background-color: #2196f3; /* Konec animace */
+    }
+}
+
+
+
+        .visualizer-container {
+            width: 100%;
+            height: 100px;
+            background: #000;
+            margin: 10px 0;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #333;  /* Přidaný okraj pro lepší viditelnost */
+        }
+        
+        #canvas {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* Debug styly */
+        .debug-info {
+            color: white;
+            position: absolute;
+            bottom: 5px;
+            left: 5px;
+            font-size: 10px;
+            z-index: 1;
+        }
+        /* Stylování pro názvy sekcí */
+.section-header {
+    padding: 10px;
+    margin: 15px 0 8px 0;
+    background: #2c3e50;
+    color: white;
+    font-weight: bold;
+    border-radius: 4px;
+    text-align: center;
+    cursor: default; /* Zabrání zobrazení kurzoru pointer */
+    user-select: none; /* Zabrání označení textu */
+    text-transform: uppercase;
+    font-size: 0.9em;
+    letter-spacing: 1px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    overflow-y: auto;
+     position: relative;
+}
+/* Styl pro tlačítko reload */
+#reload-button {
+    background: rgba(255, 255, 255, 0.1);*/
+    border: none;
+    border-radius: 50px;
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 1.4rem; /* Větší písmo pro snadnější ovládání */
+    font-weight: 600;
+    padding: 12px 20px;
+    transition: background 0.3s, box-shadow 0.3s, transform 0.2s; /* Zlepšení přechodových efektů */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Středování obsahu */
+    backdrop-filter: blur(5px);
+    user-select: none; /* Zabrání označení textu */
+}
+
+/* Změna barvy pozadí při najetí myší */
+#reload-button:hover {
+    background-color: #45a049; /* Tmavší zelená při hoveru */
+}
+
+/* Zvětšení tlačítka při kliknutí */
+#reload-button:active {
+    transform: scale(0.95); /* Mírné zmenšení při stisknutí */
+}
+
+/* Styl pro ikonu uvnitř tlačítka */
+.material-icons {
+    margin-right: 5px; /* Mezery mezi ikonou a textem */
+    font-size: 18px; /* Velikost ikony */
+}
+        p,ah{
+          font-size: 18px;
+            text-align: center;
+           color: goldenrod;
+            cursor: default; /* Zabrání zobrazení kurzoru pointer */
+            user-select: none; /* Zabrání označení textu */
+      }     
+        /* Základní styl pro tlačítko smyčky */
+/* Základní styl pro tlačítko smyčky */
+#loop-button {
+    background: rgba(255, 255, 255, 0.1);*/
+    border: none;
+    border-radius: 50px;
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 1.4rem; /* Větší písmo pro snadnější ovládání */
+    font-weight: 600;
+    padding: 12px 20px;
+    transition: background 0.3s, box-shadow 0.3s, transform 0.2s; /* Zlepšení přechodových efektů */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Středování obsahu */
+    backdrop-filter: blur(5px);
+    user-select: none; /* Zabrání označení textu */
+}
+
+/* Styl pro aktivní stav tlačítka */
+#loop-button.active {
+    background-color: #4caf50; /* zelená barva pro aktivní stav */
+    color: #fff; /* text v bílé barvě */
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.5); /* jemný zelený stín */
+}
+   #loop-button:hover{
+  background: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);      
+    }    
+#fullscreen-toggle {
+    background: rgba(255, 255, 255, 0.1);*/
+    border: none;
+    border-radius: 50px;
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 1.4rem; /* Větší písmo pro snadnější ovládání */
+    font-weight: 600;
+    padding: 12px 20px;
+    transition: background 0.3s, box-shadow 0.3s, transform 0.2s; /* Zlepšení přechodových efektů */
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Středování obsahu */
+    backdrop-filter: blur(5px);
+    user-select: none; /* Zabrání označení textu */
+}
+
+/* Efekt po najetí myši */
+#fullscreen-toggle:hover {
+    background: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
+}
+
+/* Efekt při aktivaci */
+#fullscreen-toggle.active {
+    background-color: red; /* Zelená barva při aktivaci (full screen mode) */
+    color: #fff;
+}
+    range{   
+        background: #fff;
+        
+        
+        }
+/* Styly pro playlist */
+/* Styly pro playlist */
+#playlist {
+    counter-reset: playlist-counter;
+    background: var(--background-light);
+    border-radius: 12px;
+    padding: var(--spacing-unit);
+    max-height: 440px; /* Výchozí výška kontejneru pro notebook, JavaScript ji upraví */
+    overflow-y: auto;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin: var(--spacing-unit) 0;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) var(--background-dark);
+    position: relative;
+    user-select: none; /* Zabrání označení textu */
+}
+
+
+
+#playlist.hidden {
+    max-height: 0;
+    opacity: 0;
+    margin: 0;
+    padding: 0;
+}
+/* Styly pro toggle tlačítko */
+#toggle-playlist-button {
+    opacity: 0.7;
+    transition: opacity 0.2s ease-in-out;
+    cursor: pointer;
+    padding: 8px 12px;
+    border: none;
+    background: none;
+    color: inherit;
+}
+
+#toggle-playlist-button:hover {
+    opacity: 1;
+}
+
+#toggle-playlist-button.active {
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Animace pro plynulé přechody */
+.playlist-transition {
+    transition: all 0.3s ease-in-out;
+}
+/* Scrollbar styly */
+.playlist::-webkit-scrollbar {
+    width: 6px;
+}
+
+.playlist::-webkit-scrollbar-track {
+    background: var(--background-dark);
+}
+
+.playlist::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 3px;
+}
+          
+    
+    /* Styl pro nadpis Klávesové zkratky */
+    #ah-element {
+        display: none; /* Skryto při načtení stránky */
+        font-size: 1.2em;
+        font-weight: bold;
+        color: #ffd700; /* Zlatá barva pro titul */
+        text-shadow: 1px 1px 2px black;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+    }
+
+    /* Styl pro jednotlivé odstavce popisků */
+    #p-element-1, #p-element-2, #p-element-3 {
+    display: block;
+    max-width: 50%; /* Maximální šířka nastavená na 50% */
+    margin: 4px auto; /* Centrované na střed */
+    padding: 5px 10px;
+    background-color: #333;
+    color: #00bfff;
+    border-radius: 6px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+    text-align: center; /* Centrovaný text uvnitř */
+}
+
+
+
+
+    /* Hover efekt pro odstavce, když nad nimi přejedeš myší */
+    #p-element-1:hover, #p-element-2:hover, #p-element-3:hover {
+        background-color: #444; /* Tmavší pozadí při hoveru */
+        color: #fff; /* Bílá barva textu při hoveru */
+    }
+
+
+/*#currentTime, #duration {
+    /*font-size: 3rem; /* Původní velikost písma */
+    /*font-weight: 800; /* Původní tloušťka písma */
+    /*text-decoration: none; /* Žádné podtržení */
+    /*background-image: linear-gradient(115deg, #4fcf70, #fad648, #a767e5, #12bcfe, #44ce7b); /* Barevný gradient */
+   /* background-clip: text; /* Clip background for text */
+   /* color: transparent; /* Průhledná barva pro gradient */
+   /* text-align: center; /* Zarovnání textu na střed */
+   /* margin-bottom: var(--spacing-lg); /* Původní spodní okraj */
+   /* letter-spacing: -0.5px; /* Původní mezera mezi písmeny */
+   /* user-select: none; /* Zabrání označení textu */
+   /* animation: animate 1.5s linear infinite; /* Přidání animace */
+   /* font-family: 'Copperplate', 'Courier New', monospace;
+
+}
+
+/*  Klíčové snímky pro animaci */
+/*@keyframes animate {
+  /*  0% {
+        filter: hue-rotate(0deg); /* Počáteční stav animace */
+  /*  }
+ /*   100% {
+        filter: hue-rotate(360deg); /* Konečný stav animace */
+  /*  }
+/*}
+
+/* Pokud chceš mít zajištěné, že H1 nebude mít animaci, můžeš to specifikovat takto */
+
+}
+/* Základní nastavení pro každou část času */ 
+/* Základní nastavení pro každou část času */ 
+.time-controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.time-controls .time-part, 
+.currentTime, 
+.duration {
+    font-family: 'Courier New', monospace;
+    font-size: 3rem;
+    user-select: none; /* Zabrání označení textu */
+    background: linear-gradient(45deg, #4caf50, #f44336, #2196f3, #ff9800);
+    background-size: 400% 400%; /* Zvětšení oblasti pro gradient */
+    transition: transform 25s ease, background 25s ease;
+    animation: gradientAnimation 6s ease infinite;
+    -webkit-background-clip: text; /* Pro podporu zobrazení gradientu pouze na text */
+    color: transparent; /* Skrytí základní barvy textu */
+}
+
+.time-controls .time-separator {
+    font-family: Copperplate, 'Copperplate Gothic Light', fantasy;
+    font-size: 3rem;
+    animation: blink 1s step-start infinite, textGradientAnimation 25s ease infinite;
+    user-select: none; /* Zabrání označení textu */
+    background: linear-gradient(45deg, #4caf50, #f44336, #2196f3, #ff9800);
+    background-size: 400% 400%; /* Zvětšení oblasti pro gradient */
+    -webkit-background-clip: text; /* Pro podporu zobrazení gradientu pouze na text */
+    color: transparent; /* Skrytí základní barvy textu */
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+/* Animace gradientu pro text */
+@keyframes textGradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+ /*h2{
+font-family: Verdana, sans-serif;
+color: darkorange;
+font-size: 2.3rem;    
+    margin-top: ;
+         
+        margin-left: px;
+        margin-right:- px;
+        }
+     /* Styl pro H2 s animací */
+/* Styl pro H2 s animací */
+h2 {
+    font-size: 2.3rem; /* Nastavení velikosti písma */
+    font-weight: bold; /* Tučné písmo */
+    background: linear-gradient(45deg, #4caf50, #f44336, #2196f3, #ff9800); /* Gradient pozadí */
+    background-size: 400% 400%; /* Roztažení gradientu */
+    -webkit-background-clip: text; /* Použití gradientu na text */
+    color: transparent; /* Transparentní text pro aplikaci gradientu */
+    animation: textGradientAnimation 25s ease infinite; /* Pomalejší animace pro text */
+    user-select: none; /* Zabrání označení textu */
+}
+
+/* Animace pro text s gradientem */
+@keyframes textGradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
+/*CSS STYLOVÁNÍ CELÉ STRANKY od Claude AI admirala naší velké rodiny? */
+ </style>
+</head>
+<body>
+    <h1>Star Trek: HUDEBNI PREHRAVAC</h1>
+ <audio id="audioPlayer">
+    <source id="audioSource" src="" type="audio/mpeg">
+    Váš prohlížeč nepodporuje audio element.
+</audio>
+
+<div class="player-container">
+    <h2 id="trackTitle"></h2>
+    
+    <div class="time-controls">
+    <span id="currentTime">
+        <span class="time-part">00</span>
+        <span class="time-separator">:</span>
+        <span class="time-part">00</span>
+        <span class="time-separator">:</span>
+        <span class="time-part">00</span>
+    </span>
+    <input type="range" id="progress-bar" min="0" max="100" value="1">
+    <span id="duration">
+        <span class="time-part">00</span>
+        <span class="time-separator">:</span>
+        <span class="time-part">00</span>
+        <span class="time-separator">:</span>
+        <span class="time-part">00</span>
+    </span>
+
+
+</div>                                
+    <div id="myDiv">
+     <div id="control-panel">   
+    <div class="controls">
+        <button id="prev-button">◀️⬅️</button>
+        <button id="play-button">🚀</button>
+        <button id="pause-button">🖖⏸️</button>
+        <button id="next-button">▶️➡️</button>
+        <button id="loop-button"> Vypnuto</button>
+        <button id="shuffle-button">♻️🔀</button>
+        <button id="reset-button">🔄 reset</button>
+        <button id="fullscreen-toggle">⛶</button>
+         <button onclick="toggleVisibility()">📋📋</button>
+        <button id="reload-button" class="player-control-button">
+                <span class="material-icons">reset players</span></button>
+          <button id="toggle-playlist-button" class="control-button" title="Zobrazit/skrýt playlist">📋</button>
+    </div>
+   
+
+    <div class="volume-controls">
+        <button id="mute-button">🔊</button>
+        <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1">
+     
+    </div>
+    <div id="popisky">
+        <ah id="ah-element">Klávesové zkratky</ah>
+        <p id="p-element-1">(space) - (Pauza 🖖⏸️), (M) - Vypnutí Zvuku, (A) - snížit hlasitost 📣⬇️, (D) - Zvýšit Hlasitost 📣⬆️</p>
+        <p id="p-element-2">(P) - pauza 🖖⏸️, (S) - zastavit, (R) - znovu spustit 🔁▶️</p>
+        <p id="p-element-3">(F) - Celá Obrazovka ⛶</p>
+    </div>
+</div>
+    
+    
+     <!-- Přidej toto tlačítko do svého existujícího divu s ostatními tlačítky -->
+
+ 
+        
+    
+     
+    <div class="playlist" id="playlist">
+        <!-- Seznam skladeb se vygeneruje pomocí JavaScriptu -->
+    </div>
+    
+        
+        
+ <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const audioPlayer = document.getElementById('audioPlayer');
+    const audioSource = document.getElementById('audioSource');
+    const trackTitle = document.getElementById('trackTitle');
+    const playlist = document.getElementById('playlist' , 'keydown');
+    const loopButton = document.getElementById('loop-button');
+    const volumeSlider = document.getElementById('volume-slider')
+    const muteButton = document.getElementById('mute-button');
+    const shuffleButton = document.getElementById('shuffle-button');
+    const resetButton = document.getElementById("reset-button");
+    // Proměnné pro DOM prvky //tady je začátek progressbaru
+    const currentTimeDisplay = document.getElementById('currentTime');
+    const durationDisplay = document.getElementById('duration');
+    const progressBar = document.getElementById('progress-bar');
+
+     // Konstanty pro lepší čitelnost a údržbu
+     const THROTTLE_INTERVAL = 16; // ~60fps
+     const SAVE_POSITION_DELAY = 1000; // 1 sekunda
+     const MIN_PROGRESS = 0;
+     const MAX_PROGRESS = 100;   
+    
+    
+    
+    // Pomocné funkce pro logování
+    
+
+const logStyles = {
+    playlist: 'color: #2196F3; font-weight: bold',
+    player: 'color: #4CAF50; font-weight: bold',
+    warning: 'color: #FFC107; font-weight: bold',
+    error: 'color: #f44336; font-weight: bold'
+};
+
+// Hlavní funkce pro logování
+function logPlaylistAction(message) {
+    console.log('%c[Playlist] ' + message, logStyles.playlist);
+}
+
+function logPlayerAction(message) {
+    console.log('%c[Přehrávač] ' + message, logStyles.player);
+}
+
+// Inicializace playlistu
+document.addEventListener('DOMContentLoaded', () => {
+    logPlaylistAction('Playlist byl úspěšně vytvořen');
+});
+
+// Načítání skladby 
+function loadTrack(index) {
+    console.group('Načítání skladby');
+    logPlaylistAction(`Načítám skladbu s indexem: ${index}`);
+    logPlaylistAction(`Název skladby: ${trackTitle.textContent}`);
+    logPlaylistAction(`URL: ${audioSource.src}`);
+    console.groupEnd();
+
+    // Před načtením skladby přidáme CSS třídu `loading`
+    audioPlayer.classList.add('loading');
+}
+
+// Načítání metadat a aktualizace UI
+audioPlayer.addEventListener('loadedmetadata', () => {
+    // Aktualizace časového displeje a nastavení počátečních hodnot
+    updateTimeDisplay(durationDisplay, audioPlayer.duration);
+    updateTimeDisplay(currentTimeDisplay, 0);
+    progressBar.value = 0;
+
+    // Aplikace tříd pro aktivaci animace
+    const timeControls = document.querySelector('.time-controls');
+    if (timeControls) {
+        timeControls.classList.add('active');
+    }
+
+    // Výpis metadat skladby do konzole
+console.group('Metadata skladby');
+const formattedDuration = formatTime(audioPlayer.duration); // Převedeme délku na formát hh:mm:ss
+logPlayerAction(`⏱️ Délka: ${formattedDuration}`);
+
+if (audioPlayer.webkitAudioDecodedByteCount) {
+    logPlayerAction(`📊 Přenosová rychlost: ${audioPlayer.webkitAudioDecodedByteCount} bytů`);
+}
+console.groupEnd();
+});
+// Sledujeme aktualizace času a progres
+audioPlayer.addEventListener('timeupdate', () => {
+    if (!isDragging) {
+        updateTimeDisplay(currentTimeDisplay, audioPlayer.currentTime);
+        const percent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+        progressBar.value = percent;
+    }
+});
+
+
+
+// Událost pro načtení dat
+audioPlayer.addEventListener('loadeddata', (event) => {
+    event.preventDefault();
+    logPlayerAction('✅ Skladba úspěšně načtena');
+
+    // Po načtení odebereme `loading` a přidáme `loaded` třídu
+    audioPlayer.classList.remove('loading');
+    audioPlayer.classList.add('loaded');
+});
+
+
+
+// Aktualizace playlistu
+function updatePlaylistSelection(trackName) {
+    console.group('Aktualizace playlistu');
+    logPlaylistAction(`Aktuální skladba: ${trackName}`);
+    logPlaylistAction('Výběr v playlistu aktualizován');
+    console.groupEnd();
+}
+
+// Správa oblíbených
+function updateFavorites(trackName, isFavorite) {
+    logPlaylistAction(`${isFavorite ? '⭐' : '☆'} ${trackName} ${isFavorite ? 'přidána do' : 'odebrána z'} oblíbených`);
+    logPlaylistAction('Seznam oblíbených aktualizován');
+}
+
+// Chybové stavy
+audioPlayer.addEventListener('error', (e) => {
+    console.group('🚫 Chyba');
+    console.error(`Kód chyby: ${audioPlayer.error.code}`);
+    console.error(`Popis: ${audioPlayer.error.message}`);
+    console.groupEnd();
+});
+    // Pro hodnotu slideru 0.5 (50%):
+ // Math.pow(0.5, 1.0) = 0.5    // 50% hlasitosti
+ // Math.pow(0.5, 2.0) = 0.25   // 25% hlasitosti
+ // Math.pow(0.5, 3.0) = 0.125  // 12.5% hlasitosti
+ // Math.pow(0.5, 4.0) = 0.0625 // 6.25% hlasitosti
+    
+    
+ // Nastavení výchozí hlasitosti na 10 % při načtení stránky
+let previousVolume = 0.1;
+audioPlayer.volume = 0.1;
+volumeSlider.value = 0.1;
+
+// Helper funkce pro logaritmickou konverzi hodnoty slideru na hlasitost
+function logarithmicVolume(value) {
+    // Exponenciální křivka pro plynulejší nárůst hlasitosti
+    return Math.pow(value, 3.0);
+}
+
+// Událost pro ovládání hlasitosti pomocí slideru
+volumeSlider.addEventListener('input', (e) => {
+    const sliderValue = parseFloat(e.target.value);
+    // Použití logaritmické konverze pro plynulejší změnu hlasitosti
+    audioPlayer.volume = logarithmicVolume(sliderValue);
+    updateVolumeIcon();
+});
+
+// Ovládání hlasitosti pomocí tlačítka mute
+muteButton.addEventListener('click', () => {
+    if (audioPlayer.volume > 0.01) {
+        previousVolume = volumeSlider.value;
+        audioPlayer.volume = 0.01;
+        volumeSlider.value = 0.01;
+    } else {
+        volumeSlider.value = previousVolume;
+        audioPlayer.volume = logarithmicVolume(previousVolume);
+    }
+    updateVolumeIcon();
+});
+
+// Helper funkce pro aktualizaci ikonky hlasitosti
+function updateVolumeIcon() {
+    const volume = audioPlayer.volume;
+    if (volume === 0) {
+        muteButton.textContent = '🔇';
+    } else if (volume <= 0.2) {
+        muteButton.textContent = '🔈';
+    } else if (volume <= 0.4) {
+        muteButton.textContent = '🎶';
+    } else if (volume <= 0.6) {
+        muteButton.textContent = '🎵';
+    } else if (volume < 0.9) {
+        muteButton.textContent = '📢';
+    } else {
+        muteButton.textContent = '🔊';
+    }
+}
+    // Event listener pro změnu fullscreen režimu
+function handleFullscreenChange() {
+    console.log("Fullscreen změněn. Aktualizace výšky playlistu.");
+    setPlaylistMaxHeight();
+}
+
+// Event listener pro toggle playlist
+document.querySelector('#toggle-playlist-button').addEventListener('click', () => {
+    // Kontrola, zda je playlist již zobrazen
+    const playlist = document.querySelector('#playlist');
+    const isPlaylistVisible = playlist.style.display !== 'none';
+
+    if (isPlaylistVisible) {
+        // Pokud je playlist zobrazený, skrýt ho
+        playlist.style.display = 'none';
+        console.log("Playlist skryt.");
+    } else {
+        // Pokud playlist není zobrazený, zobrazit ho
+        playlist.style.display = 'block';
+        console.log("Playlist zobrazen.");
+    }
+});
+
+
+
+
+
+
+    // Nastavení hlasitosti
+    //let previousVolume = 1;
+    
+    // Seznam skladeb
+        const tracks = [
+             
+{ src: 'https://www.dropbox.com/scl/fi/x0z9ddkz3zfqrvcnb6nr8/Odysea-Kapit-na-Ar-era-1.mp3?rlkey=mlav41qi6qe5ukss3q4qdd8f6&st=44y26ef2&dl=1', title: 'Odysea-Kapitána-Arčra' },
+{ src: 'https://www.dropbox.com/scl/fi/hl4pp862wvlgd3kj2uixj/Hv-zdn-lo-sn.mp3?rlkey=uxfr6emv2h70v9blgmoily2ug&st=h40ynmje&dl=1', title: 'Hvězdná-Loď-snů' },
+{ src: 'https://www.dropbox.com/scl/fi/w6jjzo8avh3rnd70gyva6/Stanice-Hlubok-Vesm-r-9.mp3?rlkey=sy23k7qogrbott7gmj5q7db2v&st=lcr4ygmh&dl=1', title: 'Stanice-Hluboký-Vesmír-9' },
+{ src: 'https://www.dropbox.com/scl/fi/v6me6mzartct01ndzi722/jirka-a-ondra-jsou-nejlep-br-chov-Vysok-kvalita.mp3?rlkey=urg0junbwcdc6paqtutmttmpl&st=q1ppgp7y&dl=1', title:'Jirka-Ondra-jsou-nejlepší-bráchové' },
+{ src: "https://www.dropbox.com/scl/fi/qs7h9fotngaf8dc5bmvf2/Vesm-rn-Odyssea-1.mp3?rlkey=e38vuocv7kuieiccmf5oz8562&st=ju9xxk8e&dl=1", title: "Vesmírná Odisea 1" },
+{ src: "https://www.dropbox.com/scl/fi/2v0ez9ynqj9u3tbbs2kn4/ARAKAIN-DYMYTRY-t-sv-j-sen.mp3?rlkey=begwlnhg48um443rm64jaj8k0&st=g7r3sb52&dl=1", title: "Arakain dymytry žít svuj sen" },
+{ src: "https://www.dropbox.com/scl/fi/2m0xferijus0v4lbpdj2k/Bl-en-k-Hv-zd-m-1.mp3?rlkey=7h7sdbaph6qpi4tcia94vybvq&st=b4xy2s6z&dl=1", title: "Blížení ke hvězdám" },
+{ src: "https://www.dropbox.com/scl/fi/2pjvhjg0okjl2vdbxjn22/erv-D-ra-1.mp3?rlkey=r4lwn5zfy6y4m0opkkgwde0g0&st=qyl44r63&dl=1", title: "Červí díra" },
+{ src: 'https://www.dropbox.com/scl/fi/7qsfzey00g0g05xe7k0gw/Kapit-n-Picard.mp3?rlkey=e08fflsut3k99tur8ew0xcvjj&st=naaxt96i&dl=1', title: 'Kapitán-Pikard' },            
+{ src: "https://www.dropbox.com/scl/fi/1sany2hf4pw97y7ikx6kr/Kapit-n-Picard-2.mp3?rlkey=oov5g18lfhoq9tnvnbpd4au1l&st=vo0xcyj4&dl=1", title: "Kapitán Pikard 2" },
+{ src: "https://www.dropbox.com/scl/fi/iep5gi3gfgkw41dn6j2b9/Kapit-n-Riker.mp3?rlkey=sehzr8lek8c28jyeq4ayjjfn5&st=5yrju1im&dl=1", title: "Kapitán Riker" },
+{ src: "https://www.dropbox.com/scl/fi/pi8vjvwj02c1zj4nuw149/Nad-je-v-Temn-ch-asech.mp3?rlkey=0xiycum1ji18dok9rh1mmqhwo&st=4abhd0x2&dl=1", title: "Naděje v temních časech" },
+{ src: "https://www.dropbox.com/scl/fi/ccckqqvzifs8b1ysruiq1/Odv-n-Pos-dka.mp3?rlkey=bnfy7ym2m0rao2374mw0g4xhc&st=22fenwvk&dl=1", title: "Odvážná posádka" },
+{ src: "https://www.dropbox.com/scl/fi/x0z9ddkz3zfqrvcnb6nr8/Odysea-Kapit-na-Ar-era-1.mp3?rlkey=mlav41qi6qe5ukss3q4qdd8f6&st=ymr1hpfw&dl=1", title: "Odisea Kapitána Arčra 1" },
+{ src: "https://www.dropbox.com/scl/fi/27zunc86ujirpxj1hvhxc/Pos-dka-Enterprise-D.mp3?rlkey=ge98t19y7y1nqtec0jlq9w0kr&st=qozanohm&dl=1", title: "Posádka Enterprise-D" },
+{ src: "https://www.dropbox.com/scl/fi/9xxqrcosag1w38qlwamft/Stanice-Hlubok-Vesm-r-9-2.mp3?rlkey=yvrxshbsg1fw4ulfgc9awyaqn&st=sussqmc2&dl=1", title: "Stanice Hluboký Vesmír 9 ,2" },
+{ src: "https://www.dropbox.com/scl/fi/j14wk1i4gj15s5w2jn5l4/Star-Trek-Enterprise-Theme-Extended-Version-.mpg.mp3?rlkey=bfykx9urgc0m58lshd4u6y0g8&st=undzz81o&dl=1", title: "Star Trek Enterprise NX-01 Intro" },
+{ src: "https://www.dropbox.com/scl/fi/oazfxyf28omnabs6wsy09/Star-Trek-Voyager-4k-HD-Intro-NeonVisual.mp3?rlkey=cj5o6lhite277q9f8oeeixnlc&st=7bl423dk&dl=1", title: "Star Trek Voyager Intro" },
+{ src: "https://www.dropbox.com/scl/fi/beossqqw6rquqfzghfvbf/Star-Trek_-Discovery-Main-Theme.mp3?rlkey=oba8a483o61glsm3b62lasy2p&st=59uxhh2u&dl=1", title: "Star Trek Discovery Intro" },
+{ src: "https://www.dropbox.com/scl/fi/yi1w5b9mwuwwl4gsrg01l/Star-Trek_-The-Next-Generation-Theme-EPIC-VERSION.mp3?rlkey=7wsegbwm0f2zqrdv4lstx3hbg&st=j5z0t7db&dl=1", title: "Star Trek Nová Generace Intro" },
+{ src: "https://www.dropbox.com/scl/fi/61uxo0jemsb84iyg6yxw3/Star-Trek_-Deep-Space-Nine-4K-HD-Intro-NeonVisual.mp3?rlkey=ltd4xwfosro3xcu08go2aeiza&st=tatj06i2&dl=1", title: "Star Trek Deep Space Nine intro" },
+{ src: "https://www.dropbox.com/scl/fi/wlqagj87943cxdkcupbvl/Vesm-rn-Odyssea-2.mp3?rlkey=pneeuvj35yf4ucvey572b98zm&st=tpuzyc6b&dl=1", title: "Vesmírná Odisea 2" },
+{ src: "https://www.dropbox.com/scl/fi/z6cga3177ej1yjobq0zip/EPICK-OUTRO-STAR-TREK-STYLE-v.2.mp3?rlkey=9u3v2buyfavfc237l11in5iff&st=drotyft0&dl=1", title: "Epické Outro-Star Trek Style v.2" },
+{ src: "https://www.dropbox.com/scl/fi/6e24v3a9h6eer8vsiwxnj/EPICK-OUTRO-STAR-TREK-STYLE-v.1.mp3?rlkey=vylstj6deofmapytc4tfnx8kg&st=epol3xel&dl=1", title: "Epické Outro-Star Trek Style v.1" }, 
+{ src: "https://www.dropbox.com/scl/fi/zfsubjnfmaj4wfjd6kqmu/Star-tek-p-sni-ka-pos-dek-1.mp3?rlkey=a37s46ylfidynhwd5m53ds4im&st=ectq5xua&dl=1", title: "Star Trek Písnička posádek 1" },
+{ src: "https://www.dropbox.com/scl/fi/ts7rsuztzji2w2s4ylrj3/Star-tek-p-sni-ka-pos-dek-1-2.mp3?rlkey=c3qoi52mwjq4igkzppl0thvbs&st=keimo1r4&dl=1", title: "Star Trek Písnička posádek 2" },
+{ src: "https://www.dropbox.com/scl/fi/wcx0yh5vqh6da7re7topd/star-terk-p-sni-ka-3-2.mp3?rlkey=v86ltne45qv7sx8muc71hwrk9&st=whcmp6r8&dl=1", title: "Star Trek Písnička posádek 3" },
+{ src: "https://www.dropbox.com/scl/fi/rn7b6bvpsnfut6wqewxjz/Star-tek-p-sni-ka-pos-dek-4.mp3?rlkey=dryx6brexafix5cj921otvf5k&st=j7xkxd7m&dl=1", title: "Star Trek Písnička posádek 4" },
+{ src: "https://www.dropbox.com/scl/fi/yfehbrin7c3vi3tvnc7kc/Star-tek-p-sni-ka-pos-dek-7.mp3?rlkey=lajmr19vwbkf78gy1v265kf9u&st=gedx6g9v&dl=1", title: "Star Trek Písnička posádek 7" },
+{ src: "https://www.dropbox.com/scl/fi/k380vwma00v0c29hidtqi/Star-tek-p-sni-ka-pos-dek-9.mp3?rlkey=h7y8brihtr831easrdsh9xkpi&st=wp3esqld&dl=1", title: "Star Trek Písnička posádek 9" },
+{ src: "https://www.dropbox.com/scl/fi/mr6erkk5n84k57qcszzmx/Star-tek-p-sni-ka-pos-dek-10.mp3?rlkey=wmslnntr00rt0vabgfv2wzxng&st=5m9pnouh&dl=1", title: "Star Trek Písnička posádek 10" },
+{ src: "https://www.dropbox.com/scl/fi/bfxlnanu7jm5gisn04j5g/stat-tek-pisnicka-2.mp3?rlkey=0d6e0iucvfxocvm386uqox8gq&st=ktfvgpba&dl=1", title: "Star Trek Písnička 2" },            
+{ src: "https://www.dropbox.com/scl/fi/hexg5kal8hdbuhv8f39ez/star-terk-p-sni-ka-3.mp3?rlkey=rk0k2kkvh06xcqzzm9v1c1bmm&st=4icoon1g&dl=1", title: "Star Trek Písnička 3" },
+{ src: "https://www.dropbox.com/scl/fi/ulcq4mit0ucamvl4tv0c1/star-trek-v-echni-serie.mp3?rlkey=c3mc95v1uft1amf0pci5i6o54&st=dqqdunyb&dl=1", title: "Star Trek všechny serie" },  
+{ src: "https://www.dropbox.com/scl/fi/gt8lcls71trqsxi2fch40/Stanice-Hlubok-Vesm-r-9.2.mp3?rlkey=ao55ik01svoqx6kr737einpv6&st=ab33d1bx&dl=1 ", title: "Stacion deep space nine " },
+{ src: "https://www.dropbox.com/scl/fi/5t3lw3e7z3ktkvyia9z91/Star-trek-Klingoni.mp3?rlkey=hy7i5e3z8e9hty33jn2yb4qym&st=g3av6e0t&dl=1", title: "Star Trek klingoni v.1" },
+{ src: "https://www.dropbox.com/scl/fi/dswgdwr4ha5zwobzpi65o/Star-trek-Klingoni-2.mp3?rlkey=y3bknrocic66fysdbyg6rypc9&st=dkgis1hg&dl=1", title: "Star Trek klingoni v.2 " },
+{ src: "https://www.dropbox.com/scl/fi/eexwqik55aafcdbzfx3kz/Klingonsk-opera-star-trek-1.mp3?rlkey=yfkld3uizzvrcdeeexc2p04xh&st=tmo3n2so&dl=1", title: "Klingonská opera v.1" },
+{ src: "https://www.dropbox.com/scl/fi/iddvpiwebeqmhee688jeb/Klingonsk-opera-star-trek-2.mp3?rlkey=wf7hratdanpryqydwdr5htwjv&st=xdu1p96r&dl=1", title: "Klingonská opera v.2" },            
+            
+
+{ src: "https://www.dropbox.com/scl/fi/huywy0fcr1a2kebh79t5w/P-se-o-Jirkovy.-v2.mp3?rlkey=lft56ljrs0bscchtzpv8br3r5&st=ib3q970i&dl=1", title: "Písnička O jirkovy v.2" },
+{ src: "https://www.dropbox.com/scl/fi/rlvrljgsfoyxj0z8yiavd/P-se-o-Jirkovy..mp3?rlkey=t9kypjev5gpryz58u0tj8d053&st=ui34m5ot&dl=1", title: "Písnička o jirkovy " },
+{ src: "https://www.dropbox.com/scl/fi/ecbgf4bv0nar9zbbsonz5/P-se-o-Jirkovy..wav?rlkey=8c8hxobvfxfebde24u0u9bmgw&st=j7a8nugp&dl=1", title: "Píseň o Jirkovy" },
+{ src: "https://www.dropbox.com/scl/fi/v6me6mzartct01ndzi722/jirka-a-ondra-jsou-nejlep-br-chov-Vysok-kvalita.mp3?rlkey=urg0junbwcdc6paqtutmttmpl&st=07wnlf6f&dl=1", title: "Jirka a ondra jsou nejlepší bráchové" },
+{ src: "https://www.dropbox.com/scl/fi/rgaq0j1h90p4v8m1rju7l/Jirka-je-Hrdina.mp3?rlkey=vnl5k7fmaiqe81x5022r01s9v&st=lsi2d9uy&dl=1", title: "Jirka je hrdina" },
+{ src: "https://www.dropbox.com/scl/fi/sgkz57znp4ef645ud75kv/Jirka-je-Tlust-Hovado.mp3?rlkey=qw92ixc81txqlw0b0yhp1yjjm&st=wdxjc2l8&dl=1", title: "Jirka je Tlustý Hovado" },
+{ src: "https://www.dropbox.com/scl/fi/o1upftixk1mp1q0bg6ies/Jirka-je-Tlust.mp3?rlkey=mnzxobvsgeavpj70shih9bp10&st=egs2d0q7&dl=1", title: "Jirka je tlustý" },
+{ src: "https://www.dropbox.com/scl/fi/ya7xcqy3jb4q7y9s46d3t/Jirkovi-se-l-b-kluci.mp3?rlkey=59vcjfkb4s3oyqaw0v5k2x9ut&st=s4iojpd7&dl=1", title: "Jirkovy se líbí kluci" },
+{ src: "https://www.dropbox.com/scl/fi/6w0iv0mdpytdfjwfd01m1/Jirk-v-futuristick-kviz-1.mp3?rlkey=7wot60ljvyhy0gday938jg6ef&st=62159rxb&dl=1", title: "Jirkův futuristický kvíz 1" },
+{ src: "https://www.dropbox.com/scl/fi/a0bp5g48zw0wvcsrxk9p8/Jirk-v-futuristick-kv-z-1.mp3?rlkey=er6x232s8dctei47asb77cbwu&st=yyvedd4e&dl=1", title: "Jirkův futuristický kvíz 2" },
+{ src: "https://www.dropbox.com/scl/fi/vmmr22osjuabzk9kexbru/Jirk-v-Futuristick-Kv-z-3.mp3?rlkey=oj7mvctsodgsi24xmzidsdqv9&st=2z1x6hhl&dl=1", title: "Jirkův futuristický kviz 3" },
+{ src: "https://www.dropbox.com/scl/fi/xthbu4a9jvli6wkfavpen/Jirk-v-Futuristick-Kv-z-top-1.mp3?rlkey=rpg404uzibp95vgr9pq3segqo&st=bnax6wi7&dl=1", title: "Jirkův futuristický kvíz top-1" },
+{ src: "https://www.dropbox.com/scl/fi/8tar6rg1kjb5329epj8em/Jirk-v-futuristick-kviz.mp3?rlkey=kv7xabnccq5xscpwk7rbhfjni&st=tm8s11ol&dl=1", title: "Jirkův futuristický kviz 4" },            
+{ src: "https://www.dropbox.com/scl/fi/hxi7v9sxf0j6xb07atz9l/Cesta-za-S-rie-v.1.mp3?rlkey=91bmfoh9yt1fij47hre2nkh9a&st=x3z5ohbm&dl=1 ",title: "Cesta za serie v.1 " },
+{ src: "https://www.dropbox.com/scl/fi/ruz2vwsifxe52g3ndzaku/Journey-Through-i-kov-v.1.mp3?rlkey=fvbbr3ezzjb1i0oxapt15gfum&st=1dmj8x88&dl=1 ", title: "Journey Through Žižkov v.1" },
+{ src: "https://www.dropbox.com/scl/fi/5g1rg0rh082hoy6eukbgl/Journey-Through-i-kov-v.2.mp3?rlkey=f83d8wjfv8fshcdasq225awjq&st=5tw5ppz8&dl=1", title: "Journey Through Žižkov v.2" },
+{ src: "https://www.dropbox.com/scl/fi/2ol85pooie2v7dah2kkmd/Ondra-p-ijel-do-ejova-1.mp3?rlkey=iantechamvho5gv1p7gtd8slm&st=1p5jujhb&dl=1", title: "Ondra Přijel Do Čejova v1" },
+{ src: "https://www.dropbox.com/scl/fi/d8ncbtt9k1uxdja30riyi/Ondra-p-ijel-do-ejova.mp3?rlkey=sdzf7e78y6h5gkqeuh58aj2c5&st=1fpawwnp&dl=1", title: "Ondra Přijel Do Čejova v2.3" },
+{ src: "https://www.dropbox.com/scl/fi/v8fkwta2nzyzn8tn8dl87/V-let-do-Prahy-ondra-a-jirka-v.2.mp3?rlkey=zz1w8bwob8471yjyw6c7livpx&st=bkt3ly93&dl=1", title: "Ondra Přijel Do Čejova v2.4" },
+{ src: "https://www.dropbox.com/scl/fi/v8fkwta2nzyzn8tn8dl87/V-let-do-Prahy-ondra-a-jirka-v.2.mp3?rlkey=zz1w8bwob8471yjyw6c7livpx&st=yv2z2c4p&dl=1", title: "Výlet Do Prahy Ondra a Jirka v.1" },
+{ src: "https://www.dropbox.com/scl/fi/eahze3sf40f1wb114cupr/V-let-do-Prahy-ondra-a-jirka-v.3.mp3?rlkey=9uv4xqwc9rxzasjbnihuhw0jr&st=cz6utj2j&dl=1", title: "Výlet Do Prahy Ondra A Jirka v2" },
+{ src: "https://www.dropbox.com/scl/fi/oo8fjj7jte1et8turk8hv/v-let-v-Praze-Ondra-a-Jirka-v.5.mp3?rlkey=ueuy8n3xwc1doc142bl5kqtdd&st=6mlikti6&dl=1", title: "Výlet Do Prahy Ondra A Jirka v.3" },            
+            
+{ src: "https://www.dropbox.com/scl/fi/73u5c3whfsb46bhli2kvk/utah-a-jeho-bratr-1.mp3?rlkey=433d0f5su6h9azh937khz5qn7&st=36pslteq&dl=1", title: "Útah a jeho bratr 1" },
+{ src: "https://www.dropbox.com/scl/fi/ch85m3ruuk483n0av2alt/utah-a-jeho-bratr2-2.mp3?rlkey=lin5be4rgrc7zzq3j30h2n2r7&st=g54jel4m&dl=1", title: "Útah a jeho bratr 2" },
+{ src: "https://www.dropbox.com/scl/fi/pibbsiihpyo1v2sv1127l/utah-a-jeho-bratr2-5.mp3?rlkey=5wqi21ex128gd3gzrbgv6pmd8&st=36wb7tm4&dl=1", title: "Útah a jeho bratr 2-5" },
+{ src: "https://www.dropbox.com/scl/fi/rr1j0huzew4w71su1t0vt/No-n-St-ny-4.mp3?rlkey=k7vwqwyt10a7fyqk85et8hiwv&st=k1oygg30&dl=1", title: "Noční stíny 4" },
+{ src: "https://www.dropbox.com/scl/fi/rr1j0huzew4w71su1t0vt/No-n-St-ny-4.mp3?rlkey=k7vwqwyt10a7fyqk85et8hiwv&st=k1oygg30&dl=1", title: "Bod Zlomu 3" },
+{ src: "https://www.dropbox.com/scl/fi/cvynixepb9sr5p8od1c6k/No-n-St-ny-2.mp3?rlkey=wbg54xwvsvcpgwnqw71wq70of&st=860jjrig&dl=1", title: "Noční Stíny 2" },
+{ src: "https://www.dropbox.com/scl/fi/zyw6pqghlsxzr6jt0wzv0/No-n-St-ny-3.wav?rlkey=5sav7md3gem737dsu1o2pnsm8&st=sbbvqicx&dl=1", title: "Noční stíny 3" },            
+{ src: "https://www.dropbox.com/scl/fi/cvynixepb9sr5p8od1c6k/No-n-St-ny-2.mp3?rlkey=wbg54xwvsvcpgwnqw71wq70of&st=ygualcbn&dl=1", title: "Noční Stíny 5" },            
+{ src: "https://www.dropbox.com/scl/fi/8u2jqzqt7yhtzksc5qi6j/Bolivia-con-Amor.mp3?rlkey=rurkepmch68nrckh502js2g5q&st=daidw0mp&dl=1 ", title: "56--Bolivia con Amor " },
+{ src: "https://www.dropbox.com/scl/fi/d0usu2bwz053yl2lc3ago/Kr-l-Agraelus.mp3?rlkey=kl55dxlrmh8n91cselr6rbo8k&st=m9btx6wq&dl=1 ", title: "Král Agrealus " },
+            
+
+            
+{ src: "https://www.dropbox.com/scl/fi/bcticba8dh56gei1d4ucg/mohambi-v.1.mp3?rlkey=yz62mjo15sa1y0e890ac6ncwa&st=xqwkqd28&dl=1 ", title: "Mohambi v.1 " },
+{ src: "https://www.dropbox.com/scl/fi/b9a77dvf60w71i26pmhhz/mohambi-v.2.mp3?rlkey=ml6q2gf0hhdzgkjfyoxzh2ryi&st=4gr7nrw5&dl=1 ", title: "Mohambi v.2 " },
+{ src: "https://www.dropbox.com/scl/fi/bqlmlojk6r022kdn8ix08/mohambi-v.3.mp3?rlkey=r6lidbh3nnroplxgfhu9wzpka&st=7ymwtysh&dl=1 ", title: "Mohambi v.3 " },
+{ src: "https://www.dropbox.com/scl/fi/x82vbvj5bij83yw6ib4vf/mohambi-v.4.mp3?rlkey=v6wpk51scml9y7si2jltkq2eu&st=kcazz62r&dl=1 ", title: "mohambi v.4 " },
+{ src: "https://www.dropbox.com/scl/fi/6f0gxj9wavuiu3w3mio2a/mohambi-v.5.mp3?rlkey=t2neoa68q98w7xdutmwf71a8c&st=ri0gsxup&dl=1 ", title: "mohambi v.5 " },
+{ src: "https://www.dropbox.com/scl/fi/xc8xizr9qyjbns4jbkkbv/mohambi-v.6.mp3?rlkey=d3bs0knmmz8m4wnyyz3mzzem3&st=6pzfehir&dl=1 ", title: "mohambi v.6 " },
+{ src: "https://www.dropbox.com/scl/fi/uemvzfu49av2ibv2czypl/mohambi-v.7.mp3?rlkey=m7u6reo3sw804z89s8egli01w&st=cf2lhsv1&dl=1 ", title: "mohambi v.7 " },
+{ src: "https://www.dropbox.com/scl/fi/jsplu6hyq94deiswqp28z/mohambi-v.8.mp3?rlkey=8vlw6p91t74e64hbdcp3s5r1c&st=dyssttv0&dl=1 ", title: "mohambi v.8 " },
+
+
+
+{ src: "https://www.dropbox.com/scl/fi/zq7jbt5qvo7c87juxqzod/Feder-ln-stav-kret-n-2-v.1.mp3?rlkey=sizk7lqag231gqyswqxlsbobs&st=5lry8g19&dl=1", title: "Federální ústav kreténů v.1 " },
+{ src: "https://www.dropbox.com/scl/fi/320d9o45lo277jiwldg74/Feder-ln-stav-kret-n-2-v.2.mp3?rlkey=ehsiw8hvj4o4hn5r2e537sx0a&st=jwmq1llp&dl=1 ", title: "Federální ústav kreténů v.2 " },
+{ src: "https://www.dropbox.com/scl/fi/vnv3xrvzzzgkw4lnuqkmb/Bacha-na-v-ezn-lky-Crazy-SkaMix-federaln-ustav-ktretenu-v1.mp3?rlkey=kskxippifxjdafznmrwyf7n6x&st=84384d5o&dl=1 ", title: "Federalní ustav kreténu vv.3" },
+{ src: "https://www.dropbox.com/scl/fi/0ndx32iumdq89nwc53ei4/Bacha-na-v-ezn-lky-Crazy-SkaMix-federalni-ustav-ktretenu-v2.mp3?rlkey=rgaav98hnd6frs5h1amva8i5h&st=grv21l7z&dl=1 ", title: "Federální ústav kreténu vv.4 " },
+{ src: "https://www.dropbox.com/scl/fi/fsw3sltst7qgl9eig8sx7/I-only-ate-3-cheeseburgers-federalni-ustav-kretenu-v1.mp3?rlkey=bvh871fajfaxz8l3wae1t58pe&st=9sgywky9&dl=1 ", title: "Federalní ustav kreténu vvv.5 " },
+{ src: "https://www.dropbox.com/scl/fi/x20q4bt8p2ffa6h7sd2w7/I-only-ate-3-cheeseburgers-federalni-ustav-kretenu-v2.mp3?rlkey=9rs85h7hirybtjzf5movpk3hu&st=alu7p5en&dl=1 ", title: "Federální ústav kreténů vvv.6 " },
+
+            
+{ src: "https://www.dropbox.com/scl/fi/ysax641nd7abt6cgs11jd/kohout-v.1.mp3?rlkey=oyjq4zwqz30z47lkj99drvq1l&st=6wq0aodd&dl=1 ", title: "kohout v.1 " },            
+{ src: "https://www.dropbox.com/scl/fi/1iwyhbpb7fhgcegrehnme/mix-kohout-V.1.mp3?rlkey=wc7adcp832pqw7k6l3mh2nccn&st=25sgnb5q&dl=1 ", title: "Mix kohout V.01" },
+{ src: "https://www.dropbox.com/scl/fi/6laqe8d8qfza22p2dslyo/mix-kohout-V.2.mp3?rlkey=t0604v56k83b4el04peuqafle&st=12o5jltm&dl=1", title: "Mix kohout V.02" },
+{ src: "https://www.dropbox.com/scl/fi/8ol14d205geanvxq9akf9/mix-kohout-V.3.mp3?rlkey=e5zr0alxkkr6a2krecad2r9f5&st=2s6y36jp&dl=1 ", title: "Mix kohout V.03" },
+{ src: "https://www.dropbox.com/scl/fi/ecjw4tz5gcn8smcofutiz/mix-kohout-V.4.mp3?rlkey=3hp5vl5725eqzlqkrj1n5r1r7&st=2wp2rk7k&dl=1 ", title: "Mix kohout V.04" },
+{ src: "https://www.dropbox.com/scl/fi/4c3safd6877tyf6zuosjr/mix-kohout-V-5.mp3?rlkey=iwnqphuf9ctsepm47xsdthhzu&st=xult9x0g&dl=1 ", title: "Mix kohout V.05" },
+{ src: "https://www.dropbox.com/scl/fi/jcj6ryqqyuonpxrymt8lg/mix-kohout-V.6.mp3?rlkey=ojc1cbn8wnccqy74tx71cj6ds&st=jugq6nqk&dl=1 ", title: "Mix kohout V.06" },
+{ src: "https://www.dropbox.com/scl/fi/ayrvc3uupjv5lx92g4gyz/mix-kohout-V.7.mp3?rlkey=ljd67k1trd0o7vkmo6epir4iu&st=qz1ueob9&dl=1 ", title: "Mix kohout V.07" },
+{ src: "https://www.dropbox.com/scl/fi/zwrj184pqcemowfua3w1u/mix-kohout-V.8.mp3?rlkey=ez41k47e59iyo6m31aughaqej&st=wt767u2t&dl=1 ", title: "Mix kohout V.08" },
+{ src: "https://www.dropbox.com/scl/fi/g279fbyosxb6x01witj7f/mix-kohout-V.9.mp3?rlkey=fgamtlpxa8ndvfff492w91940&st=etozw2uf&dl=1 ", title: "Mix kohout V.09" },
+{ src: "https://www.dropbox.com/scl/fi/91g27sj33psivnm0lzr8k/mix-kohout-V.10.mp3?rlkey=f1223z2o2h3u8akdouv941jzy&st=ratiibn9&dl=1 ", title: "Mix kohout V.10" },
+           
+{ src: "https://www.dropbox.com/scl/fi/kzqtqh7dpzv57i7dyi6cr/Hv-zdy-a-Plameny-org.mp3?rlkey=tgxrfqz52058ilcqcxtf9avhl&st=2kt1169z&dl=1", title: "Hvězdy a Plameny original" },       
+{ src: "https://www.dropbox.com/scl/fi/z54l1sn2yrci97xeg3e6e/HV-ZDN-PLAMENY-DICO-VERZE-V.1.mp3?rlkey=jyfdzy0ompb8ks4ov0tzoniol&st=4162nuh3&dl=1",title: "HVĚZDNÉ PLAMENY DICO VERZE   V.01" }, 
+{ src: "https://www.dropbox.com/scl/fi/d11ro7p6pmrcjkpjdm0p5/HV-ZDN-PLAMENY-DICO-VERZE-V.2.mp3?rlkey=oi2wucut7b30dal2t3efmp67y&st=dh50smjg&dl=1",title: "HVĚZDNÉ PLAMENY DICO VERZE   V.02" },
+{ src: "https://www.dropbox.com/scl/fi/861lxplmb2ytlugi7xu8u/HV-ZDN-PLAMENY-DICO-VERZE-V.4.mp3?rlkey=t9orz8yxtl95k7mycx55bytym&st=pu6x5h87&dl=1",title: "HVĚZDNÉ PLAMENY DICO VERZE   V.03" },
+{ src: "https://www.dropbox.com/scl/fi/zusevzhfh9ofqjvtznrx3/HV-ZDN-PLAMENY-DICO-VERZE-V.13.mp3?rlkey=we8kdvae7vv0lyqm2uvlfppo3&st=pxkxgugg&dl=1",title: "HVĚZDNÉ PLAMENY DICO VERZE  V.04" },
+{ src: "https://www.dropbox.com/scl/fi/5k8fby7gcb2j08qvgj6xt/HV-ZDN-PLAMENY-DICO-VERZE-V.24.mp3?rlkey=9dqweybqtbip1px0vp1zresmq&st=w8fxvr1v&dl=1",title: "HVĚZDNÉ PLAMENY DICO VERZE  V.05" },
+{ src: "https://www.dropbox.com/scl/fi/hv5nr3q9nnye5p9j1wmcs/HV-ZDN-PLAMENY-DICO-VERZE-V.25.mp3?rlkey=pqgbm75bcrwbwf3j9zcj8bdtd&st=6u9rswbe&dl=1",title: "HVĚZDNÉ PLAMENY DICO VERZE  V.06" },
+{ src: "https://www.dropbox.com/scl/fi/hnwu6kowls4goqizray8q/HV-ZDN-PLAMENY-DICO-VERZE-V.26.mp3?rlkey=bz9s4x4ujkf9oxqzeki3dzl68&st=uvjo2qrw&dl=1",title: "HVĚZDNÉ PLAMENY DICO VERZE  V.07" },  
+
+                                                                                      
+{ src: "https://www.dropbox.com/scl/fi/0pjs6006vyxnneol5kmb0/velk-oslavy-ds9-V.1-Top2.mp3?rlkey=gzlayqu1qg5j63eucf8qy1y02&st=0upduvwu&dl=1",title: "Velké Oslaby DS9 V.1 TOP 2" },
+{ src: "https://www.dropbox.com/scl/fi/o2s8ggtekzmw9me861l7h/velk-oslavy-ds9-V.2.mp3?rlkey=ov1f8z1dh6oiz3iyzeotue7jg&st=5zps1rhx&dl=1",title: "Velké Oslaby DS9 V.2" },
+{ src: "https://www.dropbox.com/scl/fi/6zw923x4tanvkjsczmxbe/velk-oslavy-ds9-V.3.mp3?rlkey=w51y716l9gr92z14y9xi8ai07&st=1nud4ku3&dl=1",title: "Velké Oslaby DS9 V.3" },
+{ src: "https://www.dropbox.com/scl/fi/3ehelfnqs0owq4azk8ztu/velk-oslavy-ds9-V.4.mp3?rlkey=76rkn6lkqqrtm0l14xweg4mpo&st=18w9o0oa&dl=1",title: "Velké Oslaby DS9  V.4" },       
+{ src: "https://www.dropbox.com/scl/fi/fof9r4whf5q4obu2eph3v/velk-oslavy-ds9-V.5.mp3?rlkey=kbqzomstplo4mxp7m8pt1ga4u&st=zsi640cz&dl=1",title: "Velké Oslaby DS9  V.5" },
+{ src: "https://www.dropbox.com/scl/fi/yko0z073uve2oi28pw974/velk-oslavy-ds9-V.6.mp3?rlkey=nu542dsonhslq2d1uqwl6r1wc&st=5ed5kzua&dl=1",title: "Velké Oslaby DS9  V.6" },
+{ src: "https://www.dropbox.com/scl/fi/rwkuusern1cgtrg3uf2ym/velk-oslavy-ds9-V.7.mp3?rlkey=c4cxcsthye40ntif7gk0xgt1g&st=rockkqvo&dl=1",title: "Velké Oslaby DS9  V.7" },
+{ src: "https://www.dropbox.com/scl/fi/varh31wjuldj9vhz7ys01/velk-oslavy-ds9-v.8-Top1.mp3?rlkey=t4nfn8tis6ilacz13vm7pjtul&st=1sflpjs3&dl=1",title: "Velké Oslaby DS9  V.8 TOP 1" },
+{ src: "https://www.dropbox.com/scl/fi/7sblob56djhzvndwtgha3/Mohombi-v.13-v.1.mp3?rlkey=9nljppq53huqglufrl975ph3y&st=rknv7tgj&dl=1",title: "Bumpy Rider Mohombi V.1" },
+{ src: "https://www.dropbox.com/scl/fi/h2krpngsn6uokdh3pjorz/Mohombi-v.13-v.2.mp3?rlkey=8alcqlxyf2ibxl76p1kyjen1f&st=tn8vgz6y&dl=1",title: "Bumpy Rider Mohombi V.2" },
+{ src: "https://www.dropbox.com/scl/fi/53yo6zu8rnownjni4q2kn/mohambi-1.mp3?rlkey=1d7x1yar74nggirof8uqcpkr3&st=0rqyr2se&dl=1",title: "Bumpy Rider Mohombi V.3 TOP 1" },
+{ src: "https://www.dropbox.com/scl/fi/ltij7sipmqhv9aifbjbse/Mohombi-v.15-v.3.mp3?rlkey=ddzjopdssb4sct3uvnf7ulcl6&st=dzcxt5mu&dl=1",title: "Bumpy Rider Mohombi V.4" },
+{ src: "https://www.dropbox.com/scl/fi/7txrsffgevqw4f403hpjt/mohambi-2.mp3?rlkey=jfc8sphdqwiat851gqks8kcod&st=c3gna1lz&dl=1",title: "Bumpy Rider Mohombi V.5" }, { src: "https://www.dropbox.com/scl/fi/ce6bh03ghx9zueyj04z5p/ern-havran-Czech.mp3?rlkey=yknv0yzzec235p7ssk78bf5gc&st=6xcn1s6i&dl=1",title: "Více admirál Jiřík a Claude.AI" }, 
+{ src: "https://www.dropbox.com/scl/fi/4vglklzizcxu8lgjbop0c/ern-havran-Czech-1.mp3?rlkey=4hp1nlsqaz1adji751ziccn2u&st=v8gq8n9s&dl=1",title: "Černý Havran" }, 
+{ src: "https://www.dropbox.com/scl/fi/cpj7vvl8kbjr80i5kdi6l/P-sni-ka-o-Enterprise-a-NCC-1701-D-v.7.mp3?rlkey=s213mz3x608ocekrktzoq98gt&st=plfx3oas&dl=1",title: "Písnička o Enterprise a NCC 1701 D V.1" },
+{ src: "https://www.dropbox.com/scl/fi/09v1mudjybqkpx7bos7fz/P-sni-ka-o-Enterprise-a-NCC-1701-D-v.7-v-2.mp3?rlkey=ult84zjchfj0sljrmfqslkdd3&st=v7plml0q&dl=1",title: "Písnička o Enterprise a NCC 1701 D V.2" },   
+{ src: "https://www.dropbox.com/scl/fi/wv8gurlh0dyyqgvczn0i2/P-sni-ka-o-Enterprise-a-NCC-1701-D.mp3?rlkey=xysxuormyjteveympe4hgipz1&st=m3h8ghu9&dl=1",title: "Písnička o Enterprise a NCC 1701 D V.3" },   
+{ src: "https://www.dropbox.com/scl/fi/f4o0a1zge4sigiz3k7959/P-sni-ka-o-Enterprise-a-NCC-1701-D-v.5.mp3?rlkey=rpcd68ysaa8uwwqc427wzlq90&st=wzy7bnu4&dl=1",title: "Písnička o Enterprise a NCC 1701 D V.4" },  
+{ src: "https://www.dropbox.com/scl/fi/1ubpb0orcki3f031vsb24/star-trek-p-sni-ka-o-pos-dk-ch-v.1.mp3?rlkey=cpxyo8va9123ljx8t8ngh44np&st=r9062rts&dl=1",title: "Star Trek písnička posádek disco verze V.01 " },              
+{ src: "https://www.dropbox.com/scl/fi/7euhdrx1lmjqzo1xa35gj/star-trek-p-sni-ka-o-pos-dk-ch-v.2.mp3?rlkey=3xgc6b7pboyfgrjvcmspws4tp&st=hmgv9eua&dl=1",title: "Star Trek písnička posádek disco verze V.02 Top.1 " },              
+{ src: "https://www.dropbox.com/scl/fi/ksxqpfiqx76oluenhowzo/star-trek-p-sni-ka-o-pos-dk-ch-v.3.mp3?rlkey=r6eqazy355hkumyo69jszq1ao&st=8z4lnk59&dl=1",title: "Star Trek písnička posádek disco verze V.03 " },              
+{ src: "https://www.dropbox.com/scl/fi/96mae2ko4etzwgizd1lxg/star-trek-p-sni-ka-o-pos-dk-ch-v.4.mp3?rlkey=gx8xkqsefd1jfcqn86g81mya5&st=yaxreec1&dl=1",title: "Star Trek písnička posádek disco verze V.04 " },  
+{ src: "https://www.dropbox.com/scl/fi/ze5mjoe8eqgrpwkg26qe0/star-trek-p-sni-ka-o-pos-dk-ch-v.5.mp3?rlkey=up2qsecc9c0we3j6ukdd2wx14&st=nvlpyzgl&dl=1",title: "Star Trek písnička posádek disco verze V.05 " },          
+{ src: "https://www.dropbox.com/scl/fi/f7rpkrb5d4oayuujwowsd/star-trek-p-sni-ka-o-pos-dk-ch-v.6.mp3?rlkey=8wmgui88mqz182kqijaxe218o&st=xfzwslay&dl=1",title: "Star Trek písnička posádek disco verze V.06 " },          
+{ src: "https://www.dropbox.com/scl/fi/0lu4iy8imnjfoer0h5sxx/star-trek-p-sni-ka-o-pos-dk-ch-v.7.mp3?rlkey=2bfzirx8eee9avkpcqeux0wap&st=9oc37rjt&dl=1",title: "Star Trek písnička posádek disco verze V.07 " },          
+{ src: "https://www.dropbox.com/scl/fi/mpv5x7ctx47g5annnrrwx/star-trek-p-sni-ka-o-pos-dk-ch-v.8.mp3?rlkey=lyy7poxwdmznhm9pjbbkm2p2w&st=98ypi5dz&dl=1",title: "Star Trek písnička posádek disco verze V.08 " },          
+{ src: "https://www.dropbox.com/scl/fi/jy5lnm3gvr8wonk9hevit/star-trek-p-sni-ka-o-pos-dk-ch-v.9.mp3?rlkey=pnlafws9na7327fwhltttdtnj&st=8fijh4se&dl=1",title: "Star Trek písnička posádek disco verze V.09 " },          
+{ src: "https://www.dropbox.com/scl/fi/13wqn6cb90uzoxboumva6/star-trek-p-sni-ka-o-pos-dk-ch-v.10.mp3?rlkey=pxqz1ob71w0oe2imo2zsr9wiw&st=3oc5sm5s&dl=1",title: "Star Trek písnička posádek disco verze V.10 " },        
+{ src: "https://www.dropbox.com/scl/fi/cj69d5dhy6v7f9lavu8qw/Jirka-a-Ondra-jsou-nejlep-brachov-V.1.mp3?rlkey=vkjfy9gxpo38f383zlqdf2yo7&st=lsycsnot&dl=1",title: "Jirka a Ondra jsou nejlepší bráchové dico verze V.01 " },              
+{ src: "https://www.dropbox.com/scl/fi/jqn0ia2gp4ij0qs0d6a57/Jirka-a-Ondra-jsou-nejlep-brachov-V.2.mp3?rlkey=m13mvs8co8mntcao7eakj6ob3&st=o4kt4pee&dl=1",title: "Jirka a Ondra jsou nejlepší bráchové dico verze V.02 " },              
+{ src: "https://www.dropbox.com/scl/fi/lwqu7xmaiwv97a2ypj67f/Jirka-a-Ondra-jsou-nejlep-brachov-V.3.mp3?rlkey=2qdl2oxeo4xkq13jf1dysuany&st=nbfa8oa9&dl=1",title: "Jirka a Ondra jsou nejlepší bráchové dico verze V.03 " },              
+{ src: "https://www.dropbox.com/scl/fi/jcmqbtfvldndzcopr5ugy/Jirka-a-Ondra-jsou-nejlep-brachov-V.4.mp3?rlkey=egz3d4c243b5vlmui3awtg03w&st=op1toyux&dl=1",title: "Jirka a Ondra jsou nejlepší bráchové dico verze V.04 " },     
+        
+        
+{ src: "https://www.dropbox.com/scl/fi/8acno184v1hne57pajobo/star-trek-sout-1.mp3?rlkey=ubwep111sfll8bsyszgotmu36&st=g7mfb1ld&dl=1", title: "Star trek soutěž 1" },
+{ src: "https://www.dropbox.com/scl/fi/fnxyyuv8huallq9g2wqs5/star-trek-sout-2.mp3?rlkey=3k4xcpssgbdrr5u6e5ej6zk7h&st=qfl50p4d&dl=1", title: "Star trek soutěž 2" },
+{ src: "https://www.dropbox.com/scl/fi/wzeqg0l0bu9mse2ixxkpy/star-trek-sout-3.mp3?rlkey=wqd7tljlazpp2cpqoem9gnkdb&st=hbmut3xh&dl=1", title: "Star trek soutěž 3" },
+{ src: "https://www.dropbox.com/scl/fi/n2e8gz7sf99rvtzzf6uee/star-trek-sout-4.mp3?rlkey=wyup1v6xl8qo6g7dq3yxqkczc&st=x3tvzshx&dl=1", title: "Star trek soutěž 4" },
+{ src: "https://www.dropbox.com/scl/fi/6sfmcqpdg3avkwso4ucpf/Karaoke-na-Enterprise-5.mp3?rlkey=m8sx7x4ix1fd2ak2yq13b6upy&st=5sovg8c8&dl=1", title: "Star trek soutěž 5" },
+{ src: "https://www.dropbox.com/scl/fi/a8gip4mg752f76f7u971j/Karaoke-na-Enterprise-6.mp3?rlkey=zxyhivnohx0cov069ccs8j8xo&st=l5z3k7k5&dl=1", title: "Star trek soutěž 6" },
+{ src: "https://www.dropbox.com/scl/fi/enh0nxwnm1u5v0mon4luy/star-trek-sout-na-deep-space-nine-1.mp3?rlkey=grcdhapaq3ct66j41cylbd5wj&st=btzwwno3&dl=1", title: "Star trek soutěž na DS9 01" },
+{ src: "https://www.dropbox.com/scl/fi/mjqwsbtdl86n7akxxsh7l/star-trek-sout-na-deep-space-nine-2.mp3?rlkey=36ug7ut6qgxkunwxoqa4uust7&st=26whu40u&dl=1", title: "Star trek soutěž na DS9 02" },
+{ src: "https://www.dropbox.com/scl/fi/plobktvizyq07sk6xj2tx/star-trek-sout-na-deep-space-nine-3.mp3?rlkey=xrwazluywbabtekgjo03elw1e&st=pujepxx5&dl=1", title: "Star trek soutěž na DS9 03" },
+{ src: "https://www.dropbox.com/scl/fi/g36fk3yhe9ve3x3j023w6/star-trek-sout-na-deep-space-nine-4.mp3?rlkey=q5d37jnp0rvbn49liohaun6hf&st=j3lc2nmk&dl=1", title: "Star trek soutěž na DS9 04" },
+{ src: "https://www.dropbox.com/scl/fi/h57cit5eklouyuuuvx8q3/star-trek-sout-na-deep-space-nine-5.mp3?rlkey=4etrqaxge41nj8gmwq76bqhs3&st=r3azqnhw&dl=1", title: "Star trek soutěž na DS9 05" },
+{ src: "https://www.dropbox.com/scl/fi/u91l7b9ww4gwr6ssu470s/star-trek-sout-na-deep-space-nine-6.mp3?rlkey=uwfuro88zfka6xxzapxrpecx2&st=sjhlwrtl&dl=1", title: "Star trek soutěž na DS9 06" },
+{ src: "https://www.dropbox.com/scl/fi/ha8pavbnjimgcdnf93g9t/star-trek-sout-na-deep-space-nine-7.mp3?rlkey=c73lgmzdbjr5rtx0u0qnhvtbx&st=1l8l0tsn&dl=1", title: "Star trek soutěž na DS9 07" },
+{ src: "https://www.dropbox.com/scl/fi/bn33vbo54tu33hbnar7ox/star-trek-sout-na-deep-space-nine-8.mp3?rlkey=8rdk7r20d1h2xykfq8pmn8uux&st=d8qzl0l2&dl=1", title: "Star trek soutěž na DS9 08" },
+{ src: "https://www.dropbox.com/scl/fi/k9qmqi7l1cow2oqqizlfz/star-trek-sout-na-deep-space-nine-9.mp3?rlkey=3fdy1hiw4itk0h0w8qcni3yqr&st=q9hkyceg&dl=1", title: "Star trek soutěž na DS9 09" },
+{ src: "https://www.dropbox.com/scl/fi/ugml45kt4h6o591p3ibrz/star-trek-sout-na-deep-space-nine-10.mp3?rlkey=rozfsc6r9gy59up5xtxzk0za0&st=g2g7zvtk&dl=1", title: "Star trek soutěž na DS9 10" },
+{ src: "https://www.dropbox.com/scl/fi/oxo15o5abaf2cc3z6f7wa/star-trek-sout-na-deep-space-nine-11.mp3?rlkey=afey9t0bt03sm60vm8g7qddvy&st=eimas7pt&dl=1", title: "Star trek soutěž na DS9 11" },
+{ src: "https://www.dropbox.com/scl/fi/ih11tzjn4qbi8macdqes6/star-trek-sout-na-deep-space-nine-12.mp3?rlkey=4vwkx3m3rae9lvqk7oqmvntww&st=zhb6ytr8&dl=1", title: "Star trek soutěž na DS9 12" },
+{ src: "https://www.dropbox.com/scl/fi/4m6ypnmrsqlypadyfuw3j/star-trek-sout-na-deep-space-nine-13.mp3?rlkey=a7vj3jqvzcfj1ya54ol6fpir1&st=xfw0xzyo&dl=1", title: "Star trek soutěž na DS9 13" },
+{ src: "https://www.dropbox.com/scl/fi/u85upit3ivjxbwxezqfci/star-trek-sout-na-deep-space-nine-14.mp3?rlkey=rdta91qj8bck97wq5f4i07b8y&st=b5alg5ya&dl=1", title: "Star trek soutěž na DS9 14" },        
+
+ { src: "https://www.dropbox.com/scl/fi/064aefbc041suj0c8oua2/V-ce-admir-l-Ji-k-Admir-l-chatbot-Claude.AI-V.3.mp3?rlkey=vl8m9jou6jr1a5r1hl9318k8i&st=5v0q3chj&dl=1 ", title: "Více Admirál Jiřík, Admirál Chatbot, Claude.AI V.1" },           
+ { src: "https://www.dropbox.com/scl/fi/xp0eg4pq6q5unhcxerkie/V-ce-admir-l-Ji-k-Admir-l-chatbot-Claude.AI-V.7.mp3?rlkey=pcasoogvq9f27gjgfc6ia4wts&st=223pm0qf&dl=1", title: "Více Admirál Jiřík, Admirál Chatbot, Claude.AI V.2" },   
+ { src: "https://www.dropbox.com/scl/fi/lse1g527r86witpb8cpc5/V-ce-admir-l-Ji-k-Admir-l-chatbot-Claude.AI-V.8.mp3?rlkey=g47dep5cojuorgtqgqchx3fax&st=l8xon1z8&dl=1", title: "Více Admirál Jiřík, Admirál Chatbot, Claude.AI V.3" }, 
+                      
+{ src: "https://www.dropbox.com/scl/fi/k9t18v9dek0b2d1r9h3km/V-no-n-hv-zdn-flotila-v.1.mp3?rlkey=8lv4sgnnqf50bsezu0b1jiprn&st=g79znz3x&dl=1 ", title: "🎄 Vánoční hvězdná flotila 🎄v.1 " },   
+{ src: "https://www.dropbox.com/scl/fi/k9qscdl4d2ks45ykotrf7/V-no-n-hv-zdn-flotila-v.2.mp3?rlkey=45eypom90tynyfe7c9ljb01xk&st=3w42nd6l&dl=1 ", title: "🎄 Vánoční hvězdná flotila 🎄v.2 " }, 
+{ src: "https://www.dropbox.com/scl/fi/h7kp6hp86eoullbwpk502/V-no-n-hv-zdn-flotila-v.3.mp3?rlkey=7c3irtf3fnwuda7rqir1u9wpc&st=x5zpzpry&dl=1 ", title: "🎄 Vánoční hvězdná flotila 🎄v.03 " },   
+{ src: "https://www.dropbox.com/scl/fi/n7gwwqcwp6ows6nd74dn7/V-no-n-hv-zdn-flotila-v.4.mp3?rlkey=n6ud0bu89gnmknr1gevcbih1g&st=gm06i2x7&dl=1 ", title: "🎄 Vánoční hvězdná flotila 🎄v.04 " },               
+{ src: "https://www.dropbox.com/scl/fi/n7gwwqcwp6ows6nd74dn7/V-no-n-hv-zdn-flotila-v.4.mp3?rlkey=n6ud0bu89gnmknr1gevcbih1g&st=gm06i2x7&dl=1 ", title: "🎄 Vánoční hvězdná flotila 🎄v.05 " },   
+{ src: "https://www.dropbox.com/scl/fi/auhytys4jj9yzba2t6qf1/V-no-n-hv-zdn-flotila-v.6.mp3?rlkey=6uxv9ov3c2ug68en6moica1cp&st=cfg2fsjb&dl=1", title: "🎄 Vánoční hvězdná flotila 🎄v.06 " },               
+{ src: "https://www.dropbox.com/scl/fi/ewdl26nnogg4fkhtbl2hf/V-no-n-hv-zdn-flotila-v.7.mp3?rlkey=b4k53fop1ik8fhpts18sao1j3&st=d771wvk4&dl=1 ", title: "🎄 Vánoční hvězdná flotila 🎄v.07 " },   
+{ src: "https://www.dropbox.com/scl/fi/vusc0wvfsu1ksddfkp5q1/V-no-n-hv-zdn-flotila-v.8.mp3?rlkey=fi31cvz066l4rh12133v773ye&st=lmdayk7v&dl=1 ", title: "🎄 Vánoční hvězdná flotila 🎄v.08 " },               
+{ src: "https://www.dropbox.com/scl/fi/zt3h0319iz7j5svk3htjg/V-no-n-hv-zdn-flotila-v.9.mp3?rlkey=6tl8kumc3el6sq2kvr5tljumh&st=7s8t86ia&dl=1 ", title: "🎄 Vánoční hvězdná flotila 🎄v.09 " },   
+{ src: "https://www.dropbox.com/scl/fi/mhr1dx2eet4ekxjrdpril/V-no-n-hv-zdn-flotila-v.10.mp3?rlkey=e1x78ofhqqhvvc293j49kvnox&st=vn45a3nt&dl=1 ", title: "🎄 Vánoční hvězdná flotila 🎄v.10 " },               
+{ src: "https://www.dropbox.com/scl/fi/f8korjpx5vygudobe751y/V-no-n-hv-zdn-flotila-aj-v.11.mp3?rlkey=75p2937zsn13jyts9ytoi8jel&st=2lk6byjx&dl=1 ", title: "🎄 Vánoční hvězdná flotila 🎄v.11 " },   
+{ src: "https://www.dropbox.com/scl/fi/lx31v7stuwwngiyu1gh73/na-oko-je-cesta-V.5.mp3?rlkey=unzilsmm49gmleo9qq2sk7180&st=w4ciths2&dl=1 ", title: "Na okož je cesta V.1 " },               
+{ src: "https://www.dropbox.com/scl/fi/22usijk3mfq5a24hou01l/na-oko-je-cesta-V.9.mp3?rlkey=ruuxm0hweyu98g5gl1zm1a1wn&st=o0haf1zx&dl=1 ", title: "Na okož je cesta V.2" },   
+{ src: "https://www.dropbox.com/scl/fi/a9hbcr02vejmgodexj4du/na-oko-je-cesta-V.13.mp3?rlkey=fvebjye6qp2c7jkey4t21rffy&st=vbviz1n6&dl=1", title: "Na okož je cesta V.3 " },               
+{ src: "https://www.dropbox.com/scl/fi/17estx6ahgrj72wj5fzoz/na-oko-je-cesta-V.14.mp3?rlkey=kk24z8vzes99od62f7ep3j81q&st=afsawdqs&dl=1", title: "Na okož je cesta V.4 " },   
+            
+{ src: "https://www.dropbox.com/scl/fi/049qq9d3m6l2nzfrdhy3p/Star-Trek_-Do-nezn-ma.mp3?rlkey=spwsps7x20f7qgmmhsopx6q39&st=bcfzt5a0&dl=1", title: "Star Trek do neznama 1" },               
+{ src: "https://www.dropbox.com/scl/fi/d6mabsk8pcdxheh322uv0/Star-Trek-do-neznama-v.2.mp3?rlkey=g7z6mk4ham3n5s4pjjxn7srd7&st=z2951gp7&dl=1", title: "Star Trek do neznama 2" },                   
+{ src: "https://www.dropbox.com/scl/fi/h1iu2h7mizu1o63vwvtcv/Star-Trek-do-neznama-v.3.mp3?rlkey=s1px14pjmh62jmxc0ygt1o4s5&st=4iu7d1cw&dl=1", title: "Star Trek do neznama 3" }, 
+{ src: "https://www.dropbox.com/scl/fi/djc3q1qqtidqv8cmmlc4r/Star-Trek-do-neznama-v.4-Top-1.mp3?rlkey=gxexg98bsp2c5arxjzvu016i8&st=12o7pqew&dl=1", title: "Star Trek do neznama 4 Top-1" },         
+{ src: "https://www.dropbox.com/scl/fi/za7fxq8ng9cyjje8pmz6c/Star-Trek-do-neznama-v.5-Top-2.mp3?rlkey=0fsnk2q9rw97xcl1cgiifp4gf&st=pjsw8nwq&dl=1", title: "Star Trek do neznama 5 Top-2" },         
+        
+        ];  
+     // 160 Písniček 
+    
+    // Funkce pro kontrolu a opravu URL adres skladeb
+function checkAndFixTracks(tracks) {
+    let fixedUrls = 0;
+    let validTracks = 0;
+    
+    if (!Array.isArray(tracks)) {
+        console.error("❌ Chyba: seznam skladeb není pole nebo je prázdný.");
+        return;
+    }
+    
+    tracks.forEach(track => {
+        if (track.src) {
+            if (track.src.includes("dl=0")) {
+                track.src = track.src.replace("dl=0", "dl=1");
+                fixedUrls++;
+            }
+        }
+        
+        if (typeof track === 'object' && track.title && track.title.trim() && !track.title.includes("—")) {
+            validTracks++;
+        }
+    });
+    
+    // Souhrnný výpis na dva řádky
+    console.log(`✅ Kontrola dokončena - Celkem skladeb: ${tracks.length}, Opraveno URL: ${fixedUrls}`);
+    console.log(`🔍 Platných skladeb: ${validTracks}, Zkontrolováno URL: ${tracks.length}`);
+}
+
+// Spuštění kontroly
+checkAndFixTracks(tracks);
+
+let currentTrackIndex = 0;
+let loopEnabled = false;
+let isShuffled = false;
+let originalTracks = [...tracks];
+let shuffledTracks = [];
+let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+let isDragging = false;
+let rafId = null;
+
+    
+   // fps na milisekundy
+//const msInterval = Math.floor(1000 / požadovanéFPS);
+
+// Příklad:
+// 60fps = 1000/60 ≈ 16.67ms
+// 30fps = 1000/30 ≈ 33.33ms
+// 20fps = 1000/20 = 50ms
+// 10fps = 1000/10 = 100ms 
+     
+// Funkce pro vytvoření playlistu
+function createPlaylist() {
+    let addedTracks = 0;
+    let addedSections = 0;
+    
+    const playlist = document.getElementById('playlist');
+    playlist.innerHTML = ''; // Vyčištění playlistu před vytvořením
+    
+    tracks.forEach((track, index) => {
+        if (typeof track === 'string' && track.startsWith('¨¨===') && track.endsWith('===¨¨')) {
+            addedSections++;
+            const sectionHeader = document.createElement('div');
+            sectionHeader.className = 'section-header';
+            const sectionName = track.replace(/¨¨===|===¨¨/g, '').trim();
+            sectionHeader.textContent = sectionName;
+            playlist.appendChild(sectionHeader);
+        } else if (track.src && track.title) {
+            addedTracks++;
+            const item = document.createElement('div');
+            item.className = 'playlist-item';
+            item.textContent = track.title;
+            
+            item.addEventListener('click', () => {
+                const realIndex = tracks.filter(t => t.src && t.title)
+                    .findIndex(t => t.title === track.title);
+                currentTrackIndex = realIndex;
+                loadTrack(realIndex);
+                playTrack();
+                updatePlaylistSelection();
+            });
+            
+            const favButton = document.createElement('button');
+            favButton.className = 'favorite-button';
+            favButton.textContent = favorites.includes(track.title) ? '⭐' : '☆';
+            favButton.onclick = (e) => {
+                e.stopPropagation();
+                toggleFavorite(index);
+            };
+            
+            item.appendChild(favButton);
+            playlist.appendChild(item);
+        }
+    });
+
+    // Pouze dva řádky výpisu na konci
+    console.log(`✅ Playlist vytvořen - Přidáno skladeb: ${addedTracks}`);
+    console.log(`📑 Počet sekcí: ${addedSections}, Oblíbené skladby: ${favorites.length}`);
+}
+
+
+
+ // Pomocné funkce pro formátování času
+    function updateTimeDisplay(timeElement, seconds) {
+        if (!timeElement) return;
+        
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+        const secs = Math.floor(seconds % 60);
+        
+        const timeparts = timeElement.getElementsByClassName('time-part');
+        if (timeparts.length === 3) {
+            timeparts[0].textContent = String(hours).padStart(2, '0');
+            timeparts[1].textContent = String(minutes).padStart(2, '0');
+            timeparts[2].textContent = String(secs).padStart(2, '0');
+        }
+    }
+
+    // Progress bar ovládání
+   // let isDragging = false;
+    
+    progressBar.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        updateProgressPosition(e);
+    });
+
+    progressBar.addEventListener('touchstart', (e) => {
+        isDragging = true;
+        updateProgressPosition(e);
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (isDragging) {
+            updateProgressPosition(e);
+        }
+    });
+
+    document.addEventListener('touchmove', (e) => {
+        if (isDragging) {
+            updateProgressPosition(e);
+            e.preventDefault();
+        }
+    });
+
+    document.addEventListener('mouseup', () => {
+        isDragging = false;
+    });
+
+    document.addEventListener('touchend', () => {
+        isDragging = false;
+    });
+
+    function updateProgressPosition(e) {
+        const rect = progressBar.getBoundingClientRect();
+        const x = (e.type.includes('touch') ? e.touches[0].clientX : e.clientX) - rect.left;
+        const percent = Math.min(Math.max(x / rect.width, 0), 1);
+        
+        progressBar.value = percent * 100;
+        
+        if (audioPlayer.duration) {
+            audioPlayer.currentTime = percent * audioPlayer.duration;
+            updateTimeDisplay(currentTimeDisplay, audioPlayer.currentTime);
+        }
+    }
+
+    
+ 
+
+
+
+
+
+// Proměnné pro sledování stavu
+//let isDragging = false;
+//let lastUpdateTime = 0;
+//let rafId = null;
+//const UPDATE_INTERVAL = 16; // Pro plynulou 60fps animaci
+// Stav playlistu
+let isPlaylistVisible = true;
+// Funkce pro debounce aktualizací
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait); //setTimeout 1
+    };
+}
+function togglePlaylist() {
+    const playlist = document.getElementById('playlist');
+    const button = document.getElementById('toggle-playlist-button');
+    
+    isPlaylistVisible = !isPlaylistVisible;
+    
+    if (isPlaylistVisible) {
+        playlist.classList.remove('hidden');
+        button.classList.add('active');
+        // Obnovíme původní výšku playlistu
+      //   playlist.style.maxHeight = playlist.scrollHeight + '512px';
+        console.log('📋 Playlist zobrazen');
+        
+        // Obnovení scrollování k aktivní skladbě
+        setTimeout(handlePlaylistScroll, 300); //setTimeout 2
+    } else {
+        handlePlaylistScroll();
+        playlist.classList.add('hidden');
+        button.classList.remove('active');
+        console.log('📋 Playlist skryt');
+    }
+}
+
+// Event listener pro tlačítko
+document.getElementById('toggle-playlist-button')
+    .addEventListener('click', togglePlaylist);
+
+// Klávesová zkratka 'H'
+document.addEventListener('keydown', (e) => {
+    if (e.code === 'KeyH') {
+        e.preventDefault();
+        togglePlaylist();
+    }
+});
+
+
+    
+function updatePlaylistSelection() {
+    const items = playlist.getElementsByClassName('playlist-item');
+    Array.from(items).forEach((item, index) => {
+        if (index === currentTrackIndex) {
+            item.classList.add('now-playing');
+            handlePlaylistScroll();
+        } else {
+            item.classList.remove('now-playing');
+        }
+    });
+}
+
+document.addEventListener('keydown', handleKeyPress);   
+
+function loadTrack(index) {
+    let trackStats = {
+        loaded: false,
+        skipped: 0
+    };
+    
+    if (index < 0) return;
+    
+    let realTrack = tracks[index];
+    while (index < tracks.length && typeof realTrack === 'string') {
+        index++;
+        realTrack = tracks[index];
+        trackStats.skipped++;
+    }
+
+    if (!realTrack || !realTrack.src) return;
+
+    if (audioSource.src !== realTrack.src) {
+        audioSource.src = realTrack.src;
+        audioPlayer.load();
+        trackStats.loaded = true;
+    }
+    
+    trackTitle.textContent = realTrack.title;
+    currentTrackIndex = index;
+    updatePlaylistSelection();
+    updateFavoriteDisplay();
+    handlePlaylistScroll();
+
+    // Jediný výpis pro načtení skladby
+    console.log(`🎵 Načtena skladba: ${realTrack.title} (Index: ${index}${trackStats.skipped ? `, Přeskočeno: ${trackStats.skipped}` : ''})`);
+}
+
+function playTrack() {
+    audioPlayer.play().catch(error => {
+       // console.error("❌ Chyba přehrávání:", error);
+    });
+}
+
+audioPlayer.addEventListener('ended', () => {
+    if (loopEnabled) {
+        playTrack();
+    } else {
+        playNextTrack();
+    }
+    console.log(`🔄 ${loopEnabled ? 'Opakuji skladbu' : 'Přecházím na další'}`);
+});
+
+function playPreviousTrack() {
+    if (currentTrackIndex > 0) {
+        currentTrackIndex--;
+    } else {
+        currentTrackIndex = playlist.length - 1;
+    }
+    handlePlaylistScroll();
+    loadTrack(currentTrackIndex);
+    playTrack();
+    console.log('⏮️ Předchozí skladba');
+}
+
+function playNextTrack() {
+    currentTrackIndex++;
+    
+    if (currentTrackIndex >= tracks.length) {
+        currentTrackIndex = 0;
+    }
+    
+    handlePlaylistScroll();
+    loadTrack(currentTrackIndex);
+    playTrack();
+    console.log('⏭️ Další skladba');
+}
+
+// Události pro tlačítka
+document.getElementById("play-button").addEventListener("click", () => {
+    if (audioPlayer.paused) {
+        playTrack();
+    } else {
+        loadTrack(currentTrackIndex);
+        playTrack();
+    }
+    updateButtonStyles(true);
+    console.log('▶️ Přehrávání');
+});
+
+document.getElementById("pause-button").addEventListener("click", () => {
+    audioPlayer.pause();
+    updateButtonStyles(false);
+    console.log('⏸️ Pozastaveno');
+});
+
+document.getElementById("next-button").addEventListener("click", () => {
+    playNextTrack();
+    updateButtonStyles(true);
+});
+
+document.getElementById("prev-button").addEventListener("click", () => {
+    playPreviousTrack();
+    updateButtonStyles(true);
+});
+
+function updateButtonStyles(isPlaying) {
+    const playButton = document.getElementById('play-button');
+    const pauseButton = document.getElementById('pause-button');
+    
+    // Když se přehrává (isPlaying = true):
+    // - play button bude aktivní (svítí)
+    // - pause button nebude aktivní (zhasnutý)
+    playButton.classList.toggle('active', isPlaying);
+    pauseButton.classList.toggle('active', !isPlaying);
+}
+
+// Odkaz na tlačítko smyčky
+
+
+
+// Funkce pro aktualizaci stylů tlačítka
+function updateButtonStyles(isActive) {
+    if (isActive) {
+        loopButton.classList.add('active'); // Přidá aktivní styl
+    } else {
+        loopButton.classList.remove('active'); // Odebere aktivní styl
+    }
+}
+
+// Event listener pro přepínání smyčky
+loopButton.addEventListener("click", () => {
+    loopEnabled = !loopEnabled;
+    
+    // Log stav smyčky
+    console.log("Přepínám smyčku:", loopEnabled ? "zapnuto" : "vypnuto");
+    
+    // Aktualizace textu tlačítka
+    loopButton.textContent = `🔁 ${loopEnabled ? "Zapnuto" : "Vypnuto"}`;
+    
+    // Aktualizace stylů tlačítka podle stavu smyčky
+    updateButtonStyles(loopEnabled);
+});
+
+function addTrack(newTrack) {
+    console.log("Přidávám novou skladbu:", newTrack.title);
+    const exists = tracks.some(track => track.title === newTrack.title);
+
+    if (!exists) {
+        console.log("Skladba přidána do seznamu");
+        tracks.push(newTrack);
+    } else {
+        console.log("Skladba již existuje v seznamu");
+    }
+}
+
+shuffleButton.addEventListener('click', () => {
+    isShuffled = !isShuffled;
+    console.log("Přepínám náhodné přehrávání:", isShuffled ? "zapnuto" : "vypnuto");
+    shuffleButton.classList.toggle('active');
+
+    if (isShuffled) {
+        console.log("Míchám skladby...");
+        const sections = tracks.filter(track => typeof track === 'string');
+        const songs = tracks.filter(track => typeof track === 'object');
+        const shuffledTracks = songs.sort(() => Math.random() - 0.5);
+
+        sections.forEach((section) => {
+            const originalIndex = tracks.indexOf(section);
+            shuffledTracks.splice(originalIndex, 0, section);
+        });
+
+        tracks.splice(0, tracks.length, ...shuffledTracks);
+        console.log("Seznam skladeb byl zamíchán");
+    } else {
+        console.log("Obnovuji původní pořadí skladeb");
+        tracks.splice(0, tracks.length, ...originalTracks);
+    }
+
+    createPlaylist();
+    loadTrack(currentTrackIndex);
+    updatePlaylistSelection();
+});
+resetButton.addEventListener("click", () => {
+    console.log("Obnovuji původní pořadí skladeb");
+    tracks.splice(0, tracks.length, ...originalTracks); // Obnoví původní pořadí
+
+    createPlaylist(); // Znovu vytvoří playlist
+    loadTrack(currentTrackIndex); // Načte aktuální skladbu
+    updatePlaylistSelection(); // Aktualizuje výběr v playlistu
+});
+function toggleFavorite(trackIndex) {
+    console.log("Přepínám oblíbenou skladbu na indexu:", trackIndex);
+    const track = tracks[trackIndex];
+    if (typeof track === 'object' && track.title) {
+        const index = favorites.indexOf(track.title);
+        
+        if (index === -1) {
+            console.log("Přidávám skladbu do oblíbených:", track.title);
+            favorites.push(track.title);
+        } else {
+            console.log("Odebírám skladbu z oblíbených:", track.title);
+            favorites.splice(index, 1);
+        }
+        
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+        updateFavoriteDisplay();
+    }
+}
+
+function updateFavoriteDisplay() {
+    console.log("Aktualizuji zobrazení oblíbených skladeb");
+    const items = playlist.getElementsByClassName('playlist-item');
+    Array.from(items).forEach((item, index) => {
+        const favButton = item.querySelector('.favorite-button');
+        const track = tracks[index];
+        if (favButton && typeof track === 'object' && track.title) {
+            favButton.textContent = favorites.includes(track.title) ? '⭐' : '☆';
+        }
+    });
+}
+
+
+
+document.addEventListener('keydown', (e) => {
+    let currentSliderValue = parseFloat(volumeSlider.value);
+    
+    switch (e.code) {
+        case 'KeyD':
+          //  console.log("Zvyšuji hlasitost");
+            // Zvýšení hodnoty slideru
+            currentSliderValue = Math.min(currentSliderValue + 0.01, 1);
+            volumeSlider.value = currentSliderValue;
+            // Aplikace logaritmické křivky na hlasitost
+            audioPlayer.volume = logarithmicVolume(currentSliderValue);
+            break;
+            
+        case 'KeyA':
+          //  console.log("Snižuji hlasitost");
+            // Snížení hodnoty slideru
+            currentSliderValue = Math.max(currentSliderValue - 0.01, 0);
+            volumeSlider.value = currentSliderValue;
+            // Aplikace logaritmické křivky na hlasitost
+            audioPlayer.volume = logarithmicVolume(currentSliderValue);
+            break;
+    }
+    updateVolumeIcon();
+});
+
+
+// Vylepšená funkce pro ovládání klávesnicí
+function handleKeyPress(event) {
+    const playlistContainer = document.getElementById('playlist');
+    const scrollAmount = 100;
+    
+    switch (event.key) {
+        case 'ArrowUp':
+            console.log('Scrollování playlistu nahoru');
+            playlistContainer.scrollTop -= scrollAmount;
+            event.preventDefault();
+            break;
+            
+        case 'ArrowDown':
+            console.log('Scrollování playlistu dolů');
+            playlistContainer.scrollTop += scrollAmount;
+            event.preventDefault();
+            break;
+            
+        case 'ArrowLeft':
+            console.log('Přepnutí na předchozí skladbu');
+            playPreviousTrack();
+            event.preventDefault();
+            break;
+            
+        case 'ArrowRight':
+            console.log('Přepnutí na další skladbu');
+            playNextTrack();
+            event.preventDefault();
+            break;
+    }
+}
+// Klávesové zkratky
+document.addEventListener('keydown', (e) => {
+    if (['Space', 'ArrowLeft', 'ArrowRight', 'KeyM', 'KeyL', 'KeyP', 'KeyS', 'KeyR', 'KeyF', 'KeyA', 'KeyD'].includes(e.code)) {
+        e.preventDefault();
+    }
+    
+    switch(e.code) {
+        case 'Space':
+            console.log(`${audioPlayer.paused ? 'Spouštím' : 'Pozastavuji'} přehrávání pomocí mezerníku`);
+            if (audioPlayer.paused) {
+                playTrack();
+            } else {
+                audioPlayer.pause();
+            }
+            updateButtonStyles(true);
+            break;
+            
+        case 'KeyM':
+            console.log('Přepínání ztlumení zvuku');
+            muteButton.click();
+            break;
+            
+        case 'KeyL':
+            console.log('Přepínání smyčky');
+            updateButtonStyles(false);
+            loopButton.click();
+            break;
+
+        case 'KeyP':
+            console.log(`${audioPlayer.paused ? 'Spouštím' : 'Pozastavuji'} přehrávání pomocí klávesy P`);
+            if (audioPlayer.paused) {
+                playTrack();
+            } else {
+                audioPlayer.pause();
+            }
+            updateButtonStyles(true);
+            break;
+
+        case 'KeyS':
+            console.log('Zastavení přehrávání a reset pozice');
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0;
+            break;
+
+        case 'KeyR':
+            console.log('Restart aktuální skladby');
+            audioPlayer.currentTime = 0;
+            playTrack();
+            break;
+
+        case 'KeyF':
+            console.log(`${document.fullscreenElement ? 'Opouštím' : 'Vstupuji do'} režimu celé obrazovky`);
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            } else {
+                document.documentElement.requestFullscreen();
+            }
+            break;
+
+        case 'KeyD':
+            //console.log(`Zvýšení hlasitosti na: ${(audioPlayer.volume + 0.01).toFixed(2)}`);
+            audioPlayer.volume = Math.min(audioPlayer.volume + 0.0001, 1);
+            break;
+
+        case 'KeyA':
+            //console.log(`Snížení hlasitosti na: ${(audioPlayer.volume - 0.01).toFixed(2)}`);
+            audioPlayer.volume = Math.max(audioPlayer.volume - 0.0001, 0);
+            break;
+    }
+});
+
+
+
+// Inicializace tlačítka
+console.log("Inicializace tlačítka pro fullscreen.");
+
+const fullscreenToggle = document.getElementById("fullscreen-toggle");
+
+// Funkce pro aktualizaci stylu tlačítka podle fullscreen stavu
+function updateFullscreenButton() {
+    if (document.fullscreenElement) {
+        fullscreenToggle.classList.add("active");
+        fullscreenToggle.textContent = "⛶ ";
+        console.log("Přecházím na celou obrazovku.");
+    } else {
+        fullscreenToggle.classList.remove("active");
+        fullscreenToggle.textContent = "⛶ ";
+        console.log("Odcházím z celé obrazovky.");
+    }
+}
+
+// Event listener na tlačítko fullscreen
+fullscreenToggle.addEventListener("click", () => {
+    if (document.fullscreenElement) {
+        document.exitFullscreen();
+    } else {
+        document.documentElement.requestFullscreen();
+    }
+});
+
+// Event listener pro detekci změny fullscreen režimu
+document.addEventListener("fullscreenchange", updateFullscreenButton);
+
+// Inicializace stavu tlačítka při načtení
+updateFullscreenButton();
+// Inicializace
+createPlaylist(); // Vytvoření playlistu
+loadTrack(currentTrackIndex); // Načtení první skladby
+   });
+      // Najdeme tlačítko podle ID
+    const reloadButton = document.getElementById('reload-button');
+    
+    if (reloadButton) {
+        // Přidáme event listener pro kliknutí
+        reloadButton.addEventListener('click', () => {
+            reloadAllPlayers();  // Zavolání funkce pro reload
+        });
+    }
+// Funkce pro posouvání playlistu
+function handlePlaylistScroll() {
+    const playlistContainer = document.getElementById('playlist');
+    const currentItem = playlistContainer.querySelector('.now-playing');
+    
+    if (currentItem) {
+        const itemPosition = currentItem.offsetTop;
+        const containerHeight = playlistContainer.clientHeight;
+        const itemHeight = currentItem.clientHeight;
+        
+        // Vycentrování aktuální skladby
+        const scrollPosition = itemPosition - (containerHeight / 2) + (itemHeight / 2);
+        
+        playlistContainer.scrollTo({
+            top: scrollPosition,
+            behavior: 'smooth'
+        });
+    }
+}
+
+
+// Funkce pro reload všech přehrávačů
+function reloadAllPlayers() {
+    try {
+        console.log('Začínám reload všech přehrávačů...');
+        console.log('Ukládám aktuální stav přehrávače');
+        
+        const currentStates = {
+            currentTime: audioPlayer.currentTime,
+            wasPlaying: !audioPlayer.paused,
+            currentVolume: audioPlayer.volume,
+            currentSource: audioSource.src,
+            isLooping: audioPlayer.loop,
+            isMuted: audioPlayer.muted,
+            currentTrack: trackTitle.textContent,
+            playlistItems: [...playlist.children]
+        };
+        
+        console.log('Aktuální stav:', currentStates);
+        
+        const videoElements = document.getElementsByTagName('video');
+        console.log(`Nalezeno ${videoElements.length} video elementů`);
+        
+        Array.from(videoElements).forEach((video, index) => {
+            console.log(`Reloading video element ${index + 1}`);
+            video.load();
+        });
+        
+        console.log('Reload všech přehrávačů dokončen úspěšně');
+    } catch (error) {
+        console.error('Chyba při reloadu přehrávačů:', error);
+    }
+}
+
+// Přidání event listeneru po načtení DOM
+document.addEventListener('DOMContentLoaded', () => {
+    const reloadButton = document.getElementById('reload-button');
+    if (reloadButton) {
+        reloadButton.addEventListener('click', reloadAllPlayers);
+    }
+});
+// Funkce pro reload všech funkcí přehrávače
+const reloadAllFunctions = () => {
+    // Uložíme aktuální stav
+    const currentStates = {
+        currentTime: audioPlayer.currentTime,
+            wasPlaying: !audioPlayer.paused,
+            currentVolume: audioPlayer.volume,
+            currentSource: audioSource.src,
+            isLooping: audioPlayer.loop,
+            isMuted: audioPlayer.muted,
+            currentTrack: trackTitle.textContent,
+            //isShuffled: shuffleButton.classList.contains('active'),
+            playlistItems: [...playlist.children]
+    };
+
+    // Dočasně pozastavíme přehrávání
+    audioPlayer.pause();
+
+    // Znovunačtení všech event listenerů a funkcí
+    initializeAllFunctions();
+
+    // Obnovení všech původních stavů
+    
+};
+
+// Funkce pro inicializaci všech funkcí
+const initializeAllFunctions = () => {
+    // Audio přehrávač události
+    
+    
+    audioPlayer.addEventListener('play', updatePlayButton);
+    audioPlayer.addEventListener('pause', updatePlayButton);
+    //audioPlayer.addEventListener('volumechange', updateVolumeUI);
+    audioPlayer.addEventListener('ended', handleTrackEnd);
+
+    // Tlačítka       
+        
+};
+
+// Funkce pro obnovení všech stavů
+const restoreStates = (states) => {
+    // Obnovení základních vlastností
+    audioPlayer.volume = states.currentVolume;
+    audioPlayer.currentTime = states.currentTime;
+    audioPlayer.loop = states.isLooping;
+    audioPlayer.muted = states.isMuted;
+    
+    // Obnovení zdroje audia
+    if (states.currentSource) {
+        audioSource.src = states.currentSource;
+        audioPlayer.load();
+    }
+
+    // Obnovení UI
+    trackTitle.textContent = states.currentTrack;
+    
+    
+    
+   // Obnovení stavů tlačítek
+if (states.isLooping) loopButton.classList.add('active');
+if (states.isMuted) muteButton.classList.add('active');
+if (states.isShuffled) shuffleButton.classList.add('active');
+
+// Přidání event listenerů pro každé tlačítko
+loopButton.addEventListener("click", () => {
+    loopEnabled = !loopEnabled;
+    loopButton.classList.toggle('active', loopEnabled);  // Změna třídy podle stavu
+    loopButton.textContent = `Smyčka: ${loopEnabled ? "Zapnuto" : "Vypnuto"}`;
+});
+muteButton.addEventListener("click", () => {
+    states.isMuted = !states.isMuted;
+    muteButton.classList.toggle('active', states.isMuted);
+    muteButton.textContent = `Mute: ${states.isMuted ? "Zapnuto" : "Vypnuto"}`;
+});
+shuffleButton.addEventListener("click", () => {
+    states.isShuffled = !states.isShuffled;
+    shuffleButton.classList.toggle('active', states.isShuffled);
+    shuffleButton.textContent = `Náhodné přehrávání: ${states.isShuffled ? "Zapnuto" : "Vypnuto"}`;
+});
+
+
+// Obnovení playlistu po změně skladby
+if (states.playlistItems.length > 0) {
+    playlist.innerHTML = ''; // Vymažeme aktuální playlist
+    states.playlistItems.forEach((item, index) => {
+        const clonedItem = item.cloneNode(true); // true pro klonování s podřízenými uzly
+
+        clonedItem.addEventListener('click', function() {
+            console.log('Přehrávám skladbu s indexem:', index);
+            loadTrack(index); // Přehrát skladbu na základě indexu
+            playTrack(); // Spustí se skladba po jejím načtení
+        });
+
+        // Logika pro aktualizaci zvýraznění aktuálně přehrávané skladby
+        if (index === currentTrackIndex) {
+            clonedItem.classList.add('now-playing');
+        } else {
+            clonedItem.classList.remove('now-playing');
+        }
+
+        playlist.appendChild(clonedItem);
+    });
+} else {
+    console.log("Playlist je prázdný.");
+}
+
+
+
+    // Pokud hrála hudba, pustíme ji znovu
+    if (states.wasPlaying) {
+        audioPlayer.play().catch(console.error);
+    }
+};
+
+
+const updatePlayButton = () => {
+    const playButton = document.getElementById('play-button');
+    if (playButton) {
+        playButton.classList.toggle('playing', !audioPlayer.paused);
+    }
+};
+
+//const updateVolumeUI = () => {
+    //volumeSlider.value = audioPlayer.volume * 100;
+    //muteButton.classList.toggle('active', audioPlayer.muted);
+//};
+
+const handleTrackEnd = () => {
+    if (!audioPlayer.loop) {
+        // Přejít na další skladbu pokud existuje
+        const nextTrack = playlist.querySelector('.active')?.nextElementSibling;
+        if (nextTrack) {
+            nextTrack.click();
+        }
+    }
+};
+
+const handleProgressChange = () => {
+    const time = (progressBar.value / 100) * audioPlayer.duration;
+    audioPlayer.currentTime = time;
+};
+
+const handleVolumeChange = () => {
+    audioPlayer.volume = volumeSlider.value / 100;
+    audioPlayer.muted = false;
+    muteButton.classList.remove('active');
+};
+
+const toggleLoop = () => {
+    audioPlayer.loop = !audioPlayer.loop;
+    loopButton.classList.toggle('active');
+};
+
+const toggleMute = () => {
+    audioPlayer.muted = !audioPlayer.muted;
+    muteButton.classList.toggle('active');
+};
+
+const toggleShuffle = () => {
+    shuffleButton.classList.toggle('active');
+    // Implementace shuffle logiky zůstává zachována
+};
+
+const formatTime = (time) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`; // Opraveno
+};
+
+// Přidání event listeneru pro reload tlačítko
+reloadButton.addEventListener('click', reloadAllFunctions);
+
+// Počáteční inicializace
+initializeAllFunctions();
+
+// Načti stav z localStorage při načtení stránky
+document.addEventListener("DOMContentLoaded", function() {
+    const isVisible = localStorage.getItem("popiskyVisible") === "true";
+    setVisibility(isVisible);
+});
+
+function toggleVisibility() {
+    const ahElement = document.getElementById("ah-element");
+    const pElements = [
+        document.getElementById("p-element-1"),
+        document.getElementById("p-element-2"),
+        document.getElementById("p-element-3")
+    ];
+
+    // Zjisti současný stav a přepni ho
+    const currentlyVisible = ahElement.style.display === "block";
+    const newVisibility = !currentlyVisible;
+    setVisibility(newVisibility);
+
+    // Ulož stav do localStorage
+    localStorage.setItem("popiskyVisible", newVisibility);
+}
+
+function setVisibility(visible) {
+    const displayStyle = visible ? "block" : "none";
+    document.getElementById("ah-element").style.display = displayStyle;
+    document.getElementById("p-element-1").style.display = displayStyle;
+    document.getElementById("p-element-2").style.display = displayStyle;
+    document.getElementById("p-element-3").style.display = displayStyle;
+}
+</script>
+</body>
+</html>
